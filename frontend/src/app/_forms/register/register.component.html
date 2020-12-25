@@ -1,0 +1,50 @@
+<form *ngIf="data == 2" (ngSubmit)="register()">
+  <h2 class="text-center text-primary">Sign Up</h2>
+  <hr>
+
+  <div class="form-group">
+    <input type="text" class="form-control" required name="username" [(ngModel)]="model.username" placeholder="Username">
+  </div>
+
+  <div class="form-group">
+    <input type="password" class="form-control" required name="password" [(ngModel)]="model.password" placeholder="Password">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" required name="email" [(ngModel)]="model.email" placeholder="email">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" required name="adress" [(ngModel)]="model.adress" placeholder="adress">
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" required name="phone" [(ngModel)]="model.phone" placeholder="phone">
+  </div>
+
+
+
+  <div class="form-group text-center">
+    <button class="btn btn-success" type="submit">Register</button>
+    <button style="margin:10px;" class="btn btn-danger" type="button" (click)="cancelRegister()">Cancel</button>
+  </div>
+</form>
+
+
+<form *ngIf="data == 1" (ngSubmit)="login()">
+  <h2 class="text-center text-primary">Sign in</h2>
+  <hr>
+
+  <div class="form-group">
+    <input type="text" class="form-control" required name="username" [(ngModel)]="model.username" placeholder="Username">
+  </div>
+
+  <div class="form-group">
+    <input type="password" class="form-control" required name="password" [(ngModel)]="model.password" placeholder="Password">
+  </div>
+
+  <div class="form-group text-center">
+    <button class="btn btn-success" type="submit">log in</button>
+    <button style="margin:10px;" class="btn btn-danger" type="button" (click)="cancelRegister()">Cancel</button>
+  </div>
+</form>
