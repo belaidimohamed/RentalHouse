@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
     this.dialog.open(RegisterComponent, {
       disableClose: true,
       autoFocus : true,
-      width: '60%',
+      width: '40%',
       data:  {key: key},
     });
   }

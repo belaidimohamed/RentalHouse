@@ -1,4 +1,4 @@
-<form *ngIf="data == 2" (ngSubmit)="register()">
+<form *ngIf="data.key == 2" (ngSubmit)="register()">
   <h2 class="text-center text-primary">Sign Up</h2>
   <hr>
 
@@ -9,11 +9,13 @@
   <div class="form-group">
     <input type="password" class="form-control" required name="password" [(ngModel)]="model.password" placeholder="Password">
   </div>
-
   <div class="form-group">
     <input type="text" class="form-control" required name="email" [(ngModel)]="model.email" placeholder="email">
   </div>
-
+  <mat-radio-group aria-label="Select an option">
+    <mat-radio-button value="female" class="mr-4" >female</mat-radio-button>
+    <mat-radio-button value="male" >male</mat-radio-button>
+  </mat-radio-group>
   <div class="form-group">
     <input type="text" class="form-control" required name="adress" [(ngModel)]="model.adress" placeholder="adress">
   </div>
@@ -21,6 +23,15 @@
   <div class="form-group">
     <input type="text" class="form-control" required name="phone" [(ngModel)]="model.phone" placeholder="phone">
   </div>
+
+  <mat-form-field [color]="accent" appearance="fill">
+    <mat-label>Select your role</mat-label>
+    <mat-select  [(ngModel)]="model.role" name="choise">
+      <mat-option [color]="accent" *ngFor="let choise of list" [value]="choise">
+        {{choise}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
 
 
@@ -31,7 +42,7 @@
 </form>
 
 
-<form *ngIf="data == 1" (ngSubmit)="login()">
+<form *ngIf="data.key == 1" (ngSubmit)="login()">
   <h2 class="text-center text-primary">Sign in</h2>
   <hr>
 
