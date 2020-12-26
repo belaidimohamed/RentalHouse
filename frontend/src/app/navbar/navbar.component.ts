@@ -8,16 +8,19 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
+  width = '40%' ;
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
   openRegister(key: number) {
+    if(key==2) {
+      this.width ="60%"
+    }
     this.dialog.open(RegisterComponent, {
-      disableClose: true,
+      disableClose: false,
       autoFocus : true,
-      width: '40%',
+      width: this.width,
       data:  {key: key},
     });
   }
