@@ -73,8 +73,14 @@ export class RegisterComponent implements OnInit {
     this.cancelRegister()
   }
   login() {
-    this.auth.login(this.model);
-    this.cancelRegister()
+    this.auth.login(this.model).subscribe(
+      next => {
+        console.log('logged in succefully ! ');
+        this.cancelRegister() },
+      error => {
+        console.log(error.non_field_errors);
+        this.cancelRegister()
+      })
   }
   cancelRegister(): void {
     this.dialogRef.close();
