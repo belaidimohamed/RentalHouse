@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -5,7 +6,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { NgModule } from '@angular/core';
@@ -26,6 +28,7 @@ import { RegisterComponent } from './_forms/register/register.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
     MatDialogModule,
     MatRadioModule,
@@ -34,10 +37,11 @@ import { RegisterComponent } from './_forms/register/register.component';
     MatStepperModule,
     MatInputModule,
     MatFormFieldModule,
-    MatButtonModule
-
+    MatButtonModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     RegisterComponent,

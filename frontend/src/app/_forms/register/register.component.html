@@ -5,17 +5,17 @@
         <ng-template matStepLabel>User infos</ng-template>
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput formControlName="name" required>
+          <input matInput formControlName="name" [(ngModel)]="model.name" required>
         </mat-form-field> <br>
         <mat-form-field>
           <mat-label>password</mat-label>
-          <input type="password" matInput formControlName="password" required>
+          <input type="password" matInput formControlName="password" [(ngModel)]="model.password" required>
         </mat-form-field>
         <br>
 
         <mat-form-field>
           <mat-label>You here as : </mat-label>
-          <mat-select matInput formControlName="role" required>
+          <mat-select matInput formControlName="role" [(ngModel)]="model.role" required>
               <mat-option value="locatire">locatire</mat-option>
               <mat-option value="locateur">locateur</mat-option>
           </mat-select>
@@ -31,13 +31,13 @@
         <ng-template matStepLabel>Personal infos</ng-template>
         <mat-form-field>
           <mat-label>Address</mat-label>
-          <input matInput placeholder="Jendouba, ain drahem" formControlName="address"
+          <input matInput placeholder="Jendouba, ain drahem" [(ngModel)]="model.adress" formControlName="address"
                  required>
         </mat-form-field><br>
 
         <mat-form-field>
           <mat-label>Gender</mat-label>
-          <mat-select matInput formControlName="gender" required>
+          <mat-select matInput formControlName="gender"  [(ngModel)]="model.gender"required>
               <mat-option value="male">male</mat-option>
               <mat-option value="female">female</mat-option>
           </mat-select>
@@ -55,15 +55,15 @@
         <ng-template matStepLabel>Contact infos</ng-template>
         <mat-form-field>
           <mat-label>email</mat-label>
-          <input matInput formControlName="email" required>
+          <input matInput formControlName="email" [(ngModel)]="model.email" required>
         </mat-form-field> <br>
 
         <mat-form-field>
           <mat-label>phone</mat-label>
-          <input matInput formControlName="phone" required>
+          <input matInput formControlName="phone" [(ngModel)]="model.phone" required>
         </mat-form-field> <br>
         <div>
-          <button mat-button class="btn btn-success float-right" (click)="stepper.reset()">Save</button>
+          <button mat-button class="btn btn-success float-right" (click)="register()">Save</button>
           <button mat-button color="basic" class="float-right" matStepperPrevious>Back</button>
         </div>
       </form>

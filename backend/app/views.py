@@ -47,16 +47,17 @@ class ProfileViewSet(viewsets.ModelViewSet):
         data = json.dumps(profile)
         return JsonResponse(data, safe=False)
 
-    @action(detail=True , methods=['POST'], permission_classes=[IsOwner])
+    @action(detail=True , methods=['POST'], permission_classes=[AllowAny])
     def editProfile(self,request,pk=None):
+        print(request.data)
         user = User.objects.get(id=pk)
         self.check_object_permissions(request, user)
         if request.method == "POST":
-            role = request.POST['role']
-            adress = request.POST['adress'] 
-            email = request.POST['email']
-            phone = request.POST['phone']
-            gender = request.POST['gender']
+            role = request.data['role']
+            adress = request.data['adress'] 
+            email = request.data['email']
+            phone = request.data['phone']
+            gender = request.data['gender']
             b = UserProfile(user=user,adress=adress,email=email, phone = phone, gender= gender,role=role)
             b.save()
             return HttpResponse(status=201)

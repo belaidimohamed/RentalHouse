@@ -9,7 +9,7 @@ class UserProfile(models.Model):
     phone = models.CharField(null=True,max_length=20)
     email = models.EmailField(null=True,max_length=254)
     role = models.CharField(default="locataire",max_length=10) # locataire take , locateur give
-    gender = models.BooleanField(null=True) # false : male , True : female 
+    gender = models.CharField(null=True,max_length=10) # false : male , True : female 
 
 
     def __str__(self):

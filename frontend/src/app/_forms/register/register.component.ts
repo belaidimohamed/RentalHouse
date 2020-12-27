@@ -1,3 +1,4 @@
+import { AuthService } from './../../_services/auth.service';
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder,FormControl, FormGroup, Validators} from '@angular/forms';
@@ -22,6 +23,7 @@ export class RegisterComponent implements OnInit {
   thirdFormGroup: FormGroup;
 
   constructor(
+    private auth: AuthService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<RegisterComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {}
@@ -67,9 +69,12 @@ export class RegisterComponent implements OnInit {
   }
   register() {
     console.log(this.model);
+    this.auth.register(this.model);
+    this.cancelRegister()
   }
   login() {
-    console.log(this.model);
+    this.auth.login(this.model);
+    this.cancelRegister()
   }
   cancelRegister(): void {
     this.dialogRef.close();
