@@ -1,12 +1,16 @@
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+    transform: none !important;
+}
+.container{
+  margin-left: 60px;
+  max-width: 1400px;
+}
 .img-thumbnail {
   margin: auto;
   margin-top: 20px;
   margin-bottom: 10px;
   width: 80%;
   height: 80%;
-}
-.container {
-  margin-left: 10px;
 }
 .card-body {
   padding: 0 25px;
@@ -62,8 +66,16 @@
   border-top: 1px solid #eee;
   padding: 15px 0;
 }
+.font {
+  font-size:15px;
+}
 @media screen and (max-width: 600px) {
   .top {
     margin-top: 20px ;
   }
+  .container{
+    margin-left: 5px;
+    max-width: 1400px;
+  }
+
 }

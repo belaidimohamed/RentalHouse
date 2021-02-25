@@ -11,15 +11,34 @@ export class CardDetailsComponent implements OnInit {
   galleryImages : any ;
   constructor() { }
 
-  ngOnInit(): void {
-    this.galleryOptions = [{
-      width: '500px',
-      height: '500px',
-      imagePercent: 100 ,
-      thumbnailsColumns: 4,
-      imageAnimation:NgxGalleryAnimation.Slide,
-      preview:false
-    }]
+  ngOnInit() {
+    this.galleryOptions = [
+      {
+        width: '100%',
+        height: '530px',
+        thumbnailsColumns: 4,
+        previewCloseOnClick: true,
+        previewCloseOnEsc:true,
+        previewKeyboardNavigation:true,
+        previewInfinityMove:true,
+        imageArrowsAutoHide:true,
+        imageSwipe:true,
+        imageAnimation: NgxGalleryAnimation.Slide
+      },
+      // max-width 800
+      {
+        breakpoint: 1090,
+        imagePercent: 80,
+        thumbnailsPercent: 20,
+        thumbnailsMargin: 20,
+        thumbnailMargin: 20
+      },
+      // max-width 400
+      {
+        breakpoint: 400,
+        preview: false
+      }
+    ]
     this.galleryImages = [
       {
         small:'/assets/house1.jpeg',
