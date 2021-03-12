@@ -39,7 +39,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     @action(detail=True , methods=['GET'])
     def getProfile(self,request,pk=None):
@@ -59,5 +59,32 @@ class ProfileViewSet(viewsets.ModelViewSet):
             phone = request.data['phone']
             gender = request.data['gender']
             b = UserProfile(user=user,adress=adress,email=email, phone = phone, gender= gender,role=role)
+            b.save()
+            return HttpResponse(status=201)
+
+class HouseViewSet(viewsets.ModelViewSet):
+    queryset = House.objects.all()
+    serializer_class = HouseSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
+
+    @action(detail=True , methods=['GET'])
+    def getHouse(self,request,pk=None):
+        house = House.objects.all().filter(user=pk).values()[0] 
+        data = json.dumps(house)
+        return JsonResponse(data, safe=False)
+
+    @action(detail=True , methods=['POST'], permission_classes=[AllowAny])
+    def editHouse(self,request,pk=None):
+        print(request.data)
+        user = User.objects.get(id=pk)
+        self.check_object_permissions(request, user)
+        if request.method == "POST":
+            size = request.data['size']
+            location = request.data['location']
+            price = request.data['price']
+            description = request.data['description']
+            res_places = request.data['res_places']
+            b = House(user=user,size=size,location=location, price = price, description= description,res_places=res_places)
             b.save()
             return HttpResponse(status=201)
