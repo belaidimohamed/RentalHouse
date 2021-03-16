@@ -9,6 +9,14 @@ import { NgxGalleryAnimation } from 'ngx-gallery-9';
 export class CardDetailsComponent implements OnInit {
   galleryOptions : any = {};
   galleryImages : any ;
+  favbuttons = true ;
+  coord = '';
+
+  positionMap = {
+    Coordinates : "36.775611, 8.669139",
+  };
+  mapsURL = `https://maps.google.com/maps?q=${this.positionMap.Coordinates}&t=&z=20&ie=UTF8&iwloc=&output=embed`;
+
   constructor() { }
 
   ngOnInit() {
@@ -62,6 +70,5 @@ export class CardDetailsComponent implements OnInit {
       }
       ]
   }
-
 
 }

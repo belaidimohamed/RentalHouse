@@ -14,8 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {NgxGalleryModule} from 'ngx-gallery-9';
-import {TabsModule} from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from 'ngx-gallery-9';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -23,21 +23,23 @@ import { RegisterComponent } from './_forms/register/register.component';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 import { HomeComponent } from './home/home.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 import { appRoutes } from './routes';
-import { FavoritesComponent } from './favorites/favorites.component';
+import { SafePipe } from './_pipes/safe.pipe';
 
 
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     NavbarComponent,
     RegisterComponent,
     CardDetailsComponent,
     AcceuilComponent,
     HomeComponent,
-      FavoritesComponent
+    FavoritesComponent,
+    SafePipe,
    ],
   imports: [
     FormsModule,

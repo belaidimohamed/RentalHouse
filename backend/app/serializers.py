@@ -17,3 +17,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta :
         model = UserProfile
         fields = [ 'user','adress','phone','email','role','gender']
+
+class HouseSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = House
+        fields = ['user','size','location','price','description','res_places']

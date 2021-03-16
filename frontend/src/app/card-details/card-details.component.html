@@ -9,7 +9,7 @@
       <div class="col-sm-6 top">
         <div class="tab-panel">
           <tabset class="member-tabset">
-            <tab heading="About">
+            <tab style="font-size: 90px;" (selectTab)="favbuttons = true" heading="About">
             <div class="p-2 mt-2 font">
               <p><strong>Type : </strong> &nbsp; s+1  </p>
               <p><strong>Location : </strong>  &nbsp; Manouba </p>
@@ -21,15 +21,30 @@
               <br>
             </div>
             </tab>
-            <tab heading="Contact">
+            <tab (selectTab)="favbuttons = false" heading="Contact">
               <div class="p-2 mt-2 font">
                 <p><strong>Email : </strong> &nbsp; mohamedbelaidi408@gmail.com  </p>
               <p><strong>Phone : </strong>  &nbsp; 52664796 </p>
               </div>
             </tab>
+            <tab (selectTab)="favbuttons = false" heading="location">
+              <div class="p-2 mt-2 font">
+                <iframe
+                  [src]='mapsURL | safe'
+                  width="100%" height="315"
+                  frasmeborder="0"
+                  allowfullscreen webkitallowfullscreen mozallowfullscreen>
+                </iframe>
+                <div class="mt-4 mb-4">
+                  <strong >Change location coordinates :</strong>
+                  <input class="ml-2" type="text">
+                </div>
+
+              </div>
+            </tab>
           </tabset>
         </div>
-        <div class="row mt-3 mb-4">
+        <div *ngIf="favbuttons" class="row mt-3 mb-4">
           <div class="col-6">
             <button type="button" class="btn btn-success  btn-md btn-block">Reserve place &nbsp; <i class="fa fa-calendar-check-o" aria-hidden="true"></i></button>
           </div>
