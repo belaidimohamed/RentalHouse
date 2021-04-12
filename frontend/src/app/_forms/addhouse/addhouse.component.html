@@ -1,0 +1,81 @@
+<div class="boxie">
+  <!-- --------------------------------------------- auto complete location -------------------------------------------------- -->
+
+  <label for="auto">
+  <span class="labell"> Location :</span>
+  </label>
+  <ng-autocomplete
+    id="auto"
+    [data]="states"
+    [searchKeyword]="keyword"
+    placeholder="Please select a city"
+    (selected)='selectEvent($event)'
+    (inputChanged)='onChangeSearch($event)'
+    [itemTemplate]="itemTemplate"
+    [notFoundTemplate]="notFoundTemplate">
+  </ng-autocomplete>
+
+  <ng-template #itemTemplate let-item>
+    <a [innerHTML]="item"></a>
+  </ng-template>
+
+  <ng-template #notFoundTemplate let-notFound>
+    <div [innerHTML]="notFound"></div>
+  </ng-template>
+  <br>
+
+  <!-- ---------------------------------------------- Select type of house ------------------------------------------------------ -->
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect1"> <span  class="labell"> Type of appartement : </span></label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>S+0</option>
+      <option selected >S+1</option>
+      <option>S+2</option>
+      <option>S+3</option>
+      <option>S+4</option>
+      <option>s+5</option>
+    </select>
+  </div>
+
+  <!-- ---------------------------------------------- Select type of house ------------------------------------------------------ -->
+
+  <label for="inlineFormInputGroupUsername"> <span class="labell">Price :</span></label>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">TTC</div>
+    </div>
+    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Price in Dinars">
+  </div>
+
+  <br>
+
+
+  <image-upload url="http://mockbin.org/request"  [style]="customStyle"></image-upload>
+  <br>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Short description :</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <br>
+
+  <button type="button" class="btn btn-success float-right">Publish </button>
+  <br>
+
+  <div *ngIf="selectedFile" class="img-preview-container">
+
+    <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"
+          [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+    </div>
+
+    <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+      <div class="img-spinning-circle"></div>
+    </div>
+
+    <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
+    <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
+  </div>
+
+
+</div>
+

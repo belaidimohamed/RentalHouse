@@ -1,3 +1,4 @@
+import { AddhouseComponent } from './_forms/addhouse/addhouse.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
@@ -10,5 +11,7 @@ export const appRoutes : Routes = [
   {path:'favorits', component:FavoritesComponent},
 
   {path:'details', component:CardDetailsComponent},
+  {path:'addhouse', component:AddhouseComponent},
+
   { path: '**', redirectTo: 'acceuil' , pathMatch: 'full'}
 ];

@@ -1,0 +1,23 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.boxie {
+  margin:75px auto 0 auto;
+
+  padding: 30px;
+  background-color: rgba(216, 211, 211, 0.4);
+  border-radius: 5px;
+}
+.labell{
+  font-size: 16px;
+}
+@media screen and (min-width: 600px) {
+  .boxie {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .boxie {
+    margin:80px 15px 15px 15px;
+  }
+}

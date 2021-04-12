@@ -20,6 +20,12 @@
     </div>
 
     <div class="row">
+      <div class="card mb-4 col-md-3 box-shadow cardBox" >
+        <span class="plus">  <i class="fa fa-plus fa-5x" aria-hidden="true"></i> </span>
+          <div class="btn-group mt-3 mb-4">
+              <a type="button" class="btn btn-sm btn-outline-success center" [routerLink]="['/addhouse']">Add a new house</a>
+          </div>
+      </div>
       <div  *ngFor="let house of numbers" class="col-md-3" >  <!-- put 3 cards per line when screen is big (bootstrap) -->
         <div class="card mb-4 box-shadow cardBox" >
           <img class="card-img-top image" alt="Home" src="../../assets/house2.jpeg">

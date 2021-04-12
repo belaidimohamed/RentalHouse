@@ -1,7 +1,11 @@
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+import { AddhouseComponent } from './_forms/addhouse/addhouse.component';
 import { RouterModule } from "@angular/router";
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +18,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
@@ -27,6 +33,8 @@ import { FavoritesComponent } from './favorites/favorites.component';
 
 import { appRoutes } from './routes';
 import { SafePipe } from './_pipes/safe.pipe';
+import { ImageUploadModule } from 'angular2-image-upload';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 
 
@@ -39,9 +47,12 @@ import { SafePipe } from './_pipes/safe.pipe';
     AcceuilComponent,
     HomeComponent,
     FavoritesComponent,
+    AddhouseComponent,
     SafePipe,
    ],
   imports: [
+    CommonModule,
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -56,9 +67,12 @@ import { SafePipe } from './_pipes/safe.pipe';
     MatFormFieldModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatAutocompleteModule,
     NgxGalleryModule,
     NgxSliderModule,
+    AutocompleteLibModule,
 
+    ImageUploadModule.forRoot(),
     TabsModule.forRoot(),
     RouterModule.forRoot(appRoutes),
 
