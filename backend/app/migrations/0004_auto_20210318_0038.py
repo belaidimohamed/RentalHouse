@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             new_name='profile',
         ),
         migrations.AddField(
-            model_name='house',
+            model_name='house', 
             name='registered_p',
             field=models.JSONField(default=dict),
         ),
