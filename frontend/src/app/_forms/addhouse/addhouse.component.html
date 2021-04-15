@@ -9,8 +9,7 @@
     [data]="states"
     [searchKeyword]="keyword"
     placeholder="Please select a city"
-    (selected)='selectEvent($event)'
-    (inputChanged)='onChangeSearch($event)'
+    [(ngModel)]	 = "model.location"
     [itemTemplate]="itemTemplate"
     [notFoundTemplate]="notFoundTemplate">
   </ng-autocomplete>
@@ -28,7 +27,7 @@
 
   <div class="form-group">
     <label for="exampleFormControlSelect1"> <span  class="labell"> Type of appartement : </span></label>
-    <select class="form-control" id="exampleFormControlSelect1">
+    <select class="form-control" id="exampleFormControlSelect1"   [(ngModel)]	 = "model.type">
       <option>S+0</option>
       <option selected >S+1</option>
       <option>S+2</option>
@@ -45,7 +44,7 @@
     <div class="input-group-prepend">
       <div class="input-group-text">TTC</div>
     </div>
-    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Price in Dinars">
+    <input type="number" class="form-control" id="inlineFormInputGroupUsername" placeholder="Price in Dinars"  [(ngModel)] = "model.price">
   </div>
 
   <br>
@@ -55,11 +54,11 @@
   <br>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Short description :</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)] = "model.description"></textarea>
   </div>
   <br>
 
-  <button type="button" class="btn btn-success float-right">Publish </button>
+  <button type="button" class="btn btn-success float-right" (click)="publish()" >Publish </button>
   <br>
 
   <div *ngIf="selectedFile" class="img-preview-container">

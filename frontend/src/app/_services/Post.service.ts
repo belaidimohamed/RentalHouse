@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class PostService {
   headers = new HttpHeaders({
+    'Content-type': 'application/json',
     Authorization: 'Token ' + localStorage.getItem('token')
   } );
 
@@ -16,5 +17,10 @@ export class PostService {
 
   AddField(model: any) {
     return this.http.post(this.baseUrl + 'field/', model);
-}
+  }
+  publishHouse(model: any) {
+    console.log(model);
+    console.log(this.baseUrl + 'house/'+'1'+'/editHouse/');
+    return this.http.post(this.baseUrl + 'house/'+'1'+'/editHouse/', model, { headers: this.headers});
+  }
 }

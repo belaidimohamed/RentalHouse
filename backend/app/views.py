@@ -76,6 +76,7 @@ class HouseViewSet(viewsets.ModelViewSet):
 
     @action(detail=True , methods=['POST'], permission_classes=[AllowAny])
     def editHouse(self,request,pk=None):
+        print('fuck yasmine')
         print(request.data)
         user = User.objects.get(id=pk)
         self.check_object_permissions(request, user)
@@ -88,3 +89,4 @@ class HouseViewSet(viewsets.ModelViewSet):
             b = House(user=user,size=size,location=location, price = price, description= description,res_places=res_places)
             b.save()
             return HttpResponse(status=201)
+        return HttpResponse(status=400)

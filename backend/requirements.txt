@@ -1,4 +1,4 @@
-django==3
+django==3.2
 django-cors-headers==3.3.0
 djangorestframework
 psycopg2

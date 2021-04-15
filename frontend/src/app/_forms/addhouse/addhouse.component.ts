@@ -18,6 +18,7 @@ export class AddhouseComponent implements OnInit {
 
   selectedFile: ImageSnippet;
   maincolor: 'green';
+  model: any = {'type':"S+1"};
   customStyle = {
     selectButton: {
       "background-color": "grey",
@@ -49,52 +50,52 @@ export class AddhouseComponent implements OnInit {
   states = ['Tunisia','Algeria','Manouba'];
 
 
-  constructor(private imageService: PostService){}
+  constructor(private post : PostService){}
 
 
   ngOnInit() {
 
   }
 
-  selectEvent(item) {
-    // do something with selected item
+  publish() {
+    this.model.owner = localStorage.getItem('id');
+    this.post.publishHouse(this.model).subscribe(
+      next => {console.log('house added !')},
+      error => {console.log(error)}
+    );
   }
 
-  onChangeSearch(val: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-  }
 
-  private onSuccess() {
-    this.selectedFile.pending = false;
-    this.selectedFile.status = 'ok';
-  }
+//   private onSuccess() {
+//     this.selectedFile.pending = false;
+//     this.selectedFile.status = 'ok';
+//   }
 
-  private onError() {
-    this.selectedFile.pending = false;
-    this.selectedFile.status = 'fail';
-    this.selectedFile.src = '';
-  }
+//   private onError() {
+//     this.selectedFile.pending = false;
+//     this.selectedFile.status = 'fail';
+//     this.selectedFile.src = '';
+//   }
 
-  processFile(imageInput: any) {
-    const file: File = imageInput.files[0];
-    const reader = new FileReader();
+//   processFile(imageInput: any) {
+//     const file: File = imageInput.files[0];
+//     const reader = new FileReader();
 
-    reader.addEventListener('load', (event: any) => {
+//     reader.addEventListener('load', (event: any) => {
 
-      this.selectedFile = new ImageSnippet(event.target.result, file);
-      console.log(this.selectedFile);
-      this.selectedFile.pending = true;
+//       this.selectedFile = new ImageSnippet(event.target.result, file);
+//       console.log(this.selectedFile);
+//       this.selectedFile.pending = true;
 
-      const formData = new FormData();
-      if(this.selectedFile.file.type.includes("image")) {
-        formData.append('image', this.selectedFile.file);
-        this.onSuccess();
-      } else {
-        this.onError();
-      }
-    })
-    reader.readAsDataURL(file);
+//       const formData = new FormData();
+//       if(this.selectedFile.file.type.includes("image")) {
+//         formData.append('image', this.selectedFile.file);
+//         this.onSuccess();
+//       } else {
+//         this.onError();
+//       }
+//     })
+//     reader.readAsDataURL(file);
+// }
 
-}
 }

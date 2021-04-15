@@ -16,11 +16,12 @@ class UserProfile(models.Model):
         return self.user.username + " - " + self.role  # pylint: disable=no-member
     
 class House(models.Model):
-    profile = models.ForeignKey(User,on_delete=models.CASCADE)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
     size = models.CharField(null=True,max_length=10)
     location = models.CharField(null=True,max_length=50)
     price = models.FloatField(null=True)
     description = models.TextField(null=True)
     res_places = models.CharField(null=True,max_length=5)
     registered_p = models.JSONField(default=dict)
+    comments = JSONField(null=True)
 
