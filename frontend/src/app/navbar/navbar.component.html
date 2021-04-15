@@ -13,7 +13,17 @@
             </li>
 
           </ul>
-          <form class="form-inline mt-2 mt-md-0">
+          <div *ngIf="loggedIn()" class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" style="background-color:rgba(37, 37, 37, 0.13)" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="fa fa-user" aria-hidden="true" ></span>&nbsp; Welcome {{ this.auth.username| titlecase }}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="openEditProfileForm()"><i class="fa fa-edit"></i> &nbsp; Edit</a>
+              <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> &nbsp; Log out</a>
+            </div>
+          </div>
+
+          <form class="form-inline mt-2 mt-md-0" *ngIf="!loggedIn()">
             <button class="btn btn-outline-success my-2 my-sm-0" (click)="openRegister(1)">sign in</button>&nbsp;&nbsp;
             <button class="btn btn-outline-info my-2 my-sm-0" (click)="openRegister(2)">sign up</button>
           </form>
