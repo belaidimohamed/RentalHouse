@@ -90,3 +90,26 @@ class HouseViewSet(viewsets.ModelViewSet):
             b.save()
             return HttpResponse(status=201)
         return HttpResponse(status=400)
+
+    @action(detail=True , methods=['GET'])
+    def getComments(self,request,pk=None):
+        comments = House.objects.all().filter(id=pk).values('comments')[0]['comments']
+        comments = json.loads(comments)
+        for i in range(len(comments)) :
+            infos = UserProfile.objects.all().filter(user=comments[i]['user']).values('user')[0]
+            comments[i].update(infos)
+        data = json.dumps(comments)
+        return JsonResponse(data, safe=False)
+
+    @action(detail=True , methods=['POST'])
+    def addComment(self,request,pk=None):
+        house = House.objects.get(id = pk)
+        comments = json.loads(house.comments)
+        temp = {}
+        temp['id'] = len(comments)
+        for i in request.data :
+            temp[i] = request.data[i]
+        comments.append(temp)
+        house.comments = json.dumps(comments)
+        house.save()
+        return HttpResponse(status=201)
