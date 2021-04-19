@@ -23,4 +23,7 @@ export class PostService {
     console.log(this.baseUrl + 'house/'+'1'+'/editHouse/');
     return this.http.post(this.baseUrl + 'house/'+'1'+'/editHouse/', model, { headers: this.headers});
   }
+  addComment(model: any , id: number) {
+    return this.http.post(this.baseUrl + 'house/' + id + '/addComment/', model, { headers: this.headers});
+  }
 }

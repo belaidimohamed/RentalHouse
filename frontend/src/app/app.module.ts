@@ -26,6 +26,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RegisterComponent } from './_forms/register/register.component';
+import { CommentsComponent } from './card-details/comments/comments.component';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 import { HomeComponent } from './home/home.component';
@@ -49,6 +50,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     FavoritesComponent,
     AddhouseComponent,
     SafePipe,
+    CommentsComponent,
    ],
   imports: [
     CommonModule,

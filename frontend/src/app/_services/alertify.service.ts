@@ -24,3 +24,4 @@ constructor() { }
     alertify.success(message);
   }
 }
+
