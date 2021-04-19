@@ -1,3 +1,5 @@
+import { AlertifyService } from './../_services/alertify.service';
+import { AuthService } from './../_services/auth.service';
 import { RegisterComponent } from './../_forms/register/register.component';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
@@ -9,9 +11,25 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class NavbarComponent implements OnInit {
   width = '40%' ;
-  constructor(private dialog: MatDialog) { }
+  name : string = 'guest';
+  constructor(
+    private dialog: MatDialog,
+    private auth : AuthService,
+    private alertify: AlertifyService
+  ) { }
 
   ngOnInit(): void {
+    this.name = localStorage.getItem('name');
+  }
+  loggedIn(){
+    return this.auth.loggedIn();
+  }
+  openEditProfileForm() {
+    console.log('h');
+  }
+  logout() {
+    localStorage.clear();
+    this.alertify.warning('logged out succefully ! ');
   }
   openRegister(key: number) {
     if(key==2) {

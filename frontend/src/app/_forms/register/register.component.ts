@@ -1,3 +1,4 @@
+import { AlertifyService } from './../../_services/alertify.service';
 import { AuthService } from './../../_services/auth.service';
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
   thirdFormGroup: FormGroup;
 
   constructor(
+    private alertify: AlertifyService,
     private auth: AuthService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<RegisterComponent>,
@@ -75,13 +77,14 @@ export class RegisterComponent implements OnInit {
   login() {
     this.auth.login(this.model).subscribe(
       next => {
-        console.log('logged in succefully ! ');
+        this.alertify.success('logged in succefully ! ');
         this.cancelRegister() },
       error => {
-        console.log(error.non_field_errors);
+        this.alertify.error(error.non_field_errors);
         this.cancelRegister()
       })
   }
+
   cancelRegister(): void {
     this.dialogRef.close();
   }

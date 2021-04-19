@@ -86,7 +86,8 @@ class HouseViewSet(viewsets.ModelViewSet):
             price = request.data['price']
             description = request.data['description']
             res_places = request.data['res_places']
-            b = House(user=user,size=size,location=location, price = price, description= description,res_places=res_places)
+            registered_p = request.data['registered_p']
+            b = House(user=user,size=size,location=location, price = price, description= description,res_places=res_places,registered_p= registered_p)
             b.save()
             return HttpResponse(status=201)
         return HttpResponse(status=400)

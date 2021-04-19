@@ -29,8 +29,10 @@
     "angular2-image-upload": "*",
     "bootstrap": "^4.5.3",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.6.0",
     "ngx-bootstrap": "^6.2.0",
     "ngx-gallery-9": "^1.0.6",
+    "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
