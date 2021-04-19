@@ -97,30 +97,10 @@ class HouseViewSet(viewsets.ModelViewSet):
         comments = House.objects.all().filter(id=pk).values('comments')[0]['comments']
         comments = json.loads(comments)
         for i in range(len(comments)) :
-            infos = UserProfile.objects.all().filter(user=comments[i]['user']).values('user.username')[0]
+            infos = UserProfile.objects.all().filter(user=comments[i]['user']).values('user')[0]
             comments[i].update(infos)
         data = json.dumps(comments)
         return JsonResponse(data, safe=False)
-
-    @action(detail=True , methods=['POST'])
-    def Like(self,request,pk=None):
-        house = House.objects.get(id = pk)
-        comments = json.loads(house.comments)
-        uid = int(request.data['userId'])
-        cid = int(request.data['commentId'])
-        if uid in set().union(*(d.values() for d in comments[cid]['jaims'])) :
-            comments[cid]['jaims'] =  [i for i in comments[cid]['jaims'] if (i['id']!=uid)]
-            house.comments = json.dumps(comments)
-        else:
-            x={}
-            name = UserProfile.objects.all().filter(user=uid).values('user.username')[0]['user.username']
-            x['name'] = name
-            x['id'] = uid
-            x['type'] = 'thumb'
-            comments[cid]['jaims'].append(x)
-            house.comments = json.dumps(comments)
-        house.save()
-        return HttpResponse(status=200)
 
     @action(detail=True , methods=['POST'])
     def addComment(self,request,pk=None):
