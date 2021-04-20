@@ -50,7 +50,7 @@
   <br>
 
 
-  <image-upload url="http://mockbin.org/request"  [style]="customStyle"></image-upload>
+  <image-upload url="http://mockbin.org/request"  [style]="customStyle" (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)" ></image-upload>
   <br>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Short description :</label>

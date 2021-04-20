@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { FileHolder } from 'angular2-image-upload';
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { Router } from '@angular/router';
 
 class ImageSnippet {
   pending: boolean = false;
@@ -18,7 +21,7 @@ export class AddhouseComponent implements OnInit {
 
   selectedFile: ImageSnippet;
   maincolor: 'green';
-  model: any = {'type':"S+1"};
+  model: any = {'type':"S+1",'images':[]};
   customStyle = {
     selectButton: {
       "background-color": "grey",
@@ -50,17 +53,32 @@ export class AddhouseComponent implements OnInit {
   states = ['Tunisia','Algeria','Manouba'];
 
 
-  constructor(private post : PostService){}
+  constructor(
+    private post : PostService,
+    private alertify: AlertifyService,
+    private router: Router ){}
 
 
   ngOnInit() {
 
   }
 
+  onUploadFinished(file: FileHolder) {
+    this.model.images.push(file);
+  }
+  onRemoved(file: FileHolder) {
+    console.log(file);
+    const index = this.model.images.indexOf(file);
+    this.model.images.pop(index)
+  }
   publish() {
     this.model.owner = localStorage.getItem('id');
+    console.log(this.model)
     this.post.publishHouse(this.model).subscribe(
-      next => {console.log('house added !')},
+      (response:any) => {
+        this.alertify.success('house added !');
+        this.router.navigate(['/details', { cid: response.id }])
+      },
       error => {console.log(error)}
     );
   }

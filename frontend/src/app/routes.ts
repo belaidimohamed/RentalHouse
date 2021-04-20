@@ -10,7 +10,7 @@ export const appRoutes : Routes = [
   {path:'acceuil', component:AcceuilComponent},
   {path:'favorits', component:FavoritesComponent},
 
-  {path:'details', component:CardDetailsComponent},
+  {path:'details/:cid', component:CardDetailsComponent},
   {path:'addhouse', component:AddhouseComponent},
 
   { path: '**', redirectTo: 'acceuil' , pathMatch: 'full'}

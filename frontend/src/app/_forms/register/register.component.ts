@@ -77,10 +77,10 @@ export class RegisterComponent implements OnInit {
   login() {
     this.auth.login(this.model).subscribe(
       next => {
-        this.alertify.success('logged in succefully ! ');
+        this.alertify.success('Logged in succefully ! ');
         this.cancelRegister() },
       error => {
-        this.alertify.error(error.non_field_errors);
+        this.alertify.error('Wrong password or username !');
         this.cancelRegister()
       })
   }

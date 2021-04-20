@@ -16,6 +16,13 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
+import base64
+
+from django.core.files.base import ContentFile
+
+
+
+
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
@@ -75,22 +82,31 @@ class HouseViewSet(viewsets.ModelViewSet):
         return JsonResponse(data, safe=False)
 
     @action(detail=True , methods=['POST'], permission_classes=[AllowAny])
-    def editHouse(self,request,pk=None):
+    def createHouse(self,request,pk=None):
         print('fuck yasmine')
-        print(request.data)
+        # print(request.data)
         user = User.objects.get(id=pk)
         self.check_object_permissions(request, user)
         if request.method == "POST":
-            size = request.data['size']
+            size = request.data['type']
+            description = request.data['description']
             location = request.data['location']
             price = request.data['price']
-            description = request.data['description']
-            res_places = request.data['res_places']
-            registered_p = request.data['registered_p']
-            b = House(user=user,size=size,location=location, price = price, description= description,res_places=res_places,registered_p= registered_p)
+
+            b = House(owner=user,size=size,location=location, price = price, description= description,res_places={},
+                      registered_p= {}, comments={})
             b.save()
-            return HttpResponse(status=201)
-        return HttpResponse(status=400)
+            for i in request.data['images'] :
+
+                format, imgstr = i['src'].split(';base64,') 
+                ext = format.split('/')[-1] 
+                data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext) 
+                print(data)
+
+                img = Image(house=b,image=data)
+                img.save()
+            return HttpResponse({'id':b.id},status=201)
+        return HttpResponse({'error':'Failed to create house'},status=400)
 
     @action(detail=True , methods=['GET'])
     def getComments(self,request,pk=None):

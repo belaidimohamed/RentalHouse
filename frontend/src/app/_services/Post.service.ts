@@ -20,8 +20,8 @@ export class PostService {
   }
   publishHouse(model: any) {
     console.log(model);
-    console.log(this.baseUrl + 'house/'+'1'+'/editHouse/');
-    return this.http.post(this.baseUrl + 'house/'+'1'+'/editHouse/', model, { headers: this.headers});
+    const id = localStorage.getItem('id')
+    return this.http.post(this.baseUrl + 'house/'+id+'/createHouse/', model, { headers: this.headers});
   }
   addComment(model: any , id: number) {
     return this.http.post(this.baseUrl + 'house/' + id + '/addComment/', model, { headers: this.headers});

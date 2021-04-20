@@ -11,7 +11,6 @@ class UserProfile(models.Model):
     role = models.CharField(default="locataire",max_length=10) # locataire take , locateur give
     gender = models.CharField(null=True,max_length=10) # false : male , True : female 
 
-
     def __str__(self):
         return self.user.username + " - " + self.role  # pylint: disable=no-member
     
@@ -21,7 +20,15 @@ class House(models.Model):
     location = models.CharField(null=True,max_length=50)
     price = models.FloatField(null=True)
     description = models.TextField(null=True)
-    res_places = models.CharField(null=True,max_length=5)
+    res_places = JSONField(default=dict)
     registered_p = models.JSONField(default=dict)
     comments = JSONField(null=True)
+    def __str__(self):
+        return str(self.owner) + " - " + self.location + " - " + str(self.price)  # pylint: disable=no-member
 
+class Image(models.Model):
+    house = models.ForeignKey(House, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='houses/')
+    default = models.BooleanField(default=False)
+    def __str__(self):
+        return self.house + " - "
