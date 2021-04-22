@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { HttpClientModule } from '@angular/common/http';
@@ -36,8 +36,16 @@ import { appRoutes } from './routes';
 import { SafePipe } from './_pipes/safe.pipe';
 import { ImageUploadModule } from 'angular2-image-upload';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { HouseResolver } from './_resolvers/house-resolver';
 
 
+
+export class CustomHammerConfig extends HammerGestureConfig  {
+  overrides = {
+      pinch: { enable: false },
+      rotate: { enable: false }
+  };
+}
 
 @NgModule({
   declarations: [
@@ -80,6 +88,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
   ],
   providers: [
+    HouseResolver,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
   ],
   bootstrap: [AppComponent],
   entryComponents: [

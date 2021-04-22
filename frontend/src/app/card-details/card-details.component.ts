@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryAnimation } from 'ngx-gallery-9';
+import { GlobalConstants } from '../global-constant';
+import { GetService } from '../_services/Get.service';
 
 @Component({
   selector: 'app-card-details',
@@ -11,15 +14,26 @@ export class CardDetailsComponent implements OnInit {
   galleryImages : any ;
   favbuttons = true ;
   coord = '';
+  profile: any ;
+  house: any ;
+
+  baseUrl = GlobalConstants.apiURL ;
 
   positionMap = {
     Coordinates : "36.775611, 8.669139",
   };
   mapsURL = `https://maps.google.com/maps?q=${this.positionMap.Coordinates}&t=&z=20&ie=UTF8&iwloc=&output=embed`;
 
-  constructor() { }
+  constructor(
+    private get : GetService ,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.house = this.route.snapshot.data.house ;
+      this.makeGallery(this.house.images);
+    });
+
     this.galleryOptions = [
       {
         width: '100%',
@@ -47,28 +61,17 @@ export class CardDetailsComponent implements OnInit {
         preview: false
       }
     ]
-    this.galleryImages = [
-      {
-        small:'/assets/house1.jpeg',
-        medium: '/assets/house1.jpeg',
-        big: '/assets/house1.jpeg'
-      },
-      {
-        small:'/assets/house2.jpeg',
-        medium: '/assets/house2.jpeg',
-        big: '/assets/house2.jpeg'
-      },
-      {
-        small:'/assets/house3.jpeg',
-        medium: '/assets/house3.jpeg',
-        big: '/assets/house3.jpeg'
-      },
-      {
-        small:'/assets/house4.jpg',
-        medium: '/assets/house4.jpg',
-        big: '/assets/house4.jpg'
-      }
-      ]
-  }
 
-}
+  }
+  makeGallery(photos: any) {
+    this.galleryImages = [] ;
+    console.log("test 3")
+    photos.forEach(element => {
+      this.galleryImages.push({
+        small: this.baseUrl + 'media/'+ element.image,
+        medium:  this.baseUrl + 'media/'+ element.image,
+        big:  this.baseUrl + 'media/'+ element.image,
+      })
+    });
+    console.log(this.galleryImages)
+  }}

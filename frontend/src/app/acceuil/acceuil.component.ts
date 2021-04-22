@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalConstants } from '../global-constant';
+import { GetService } from '../_services/Get.service';
 
 @Component({
   selector: 'app-acceuil',
@@ -6,12 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./acceuil.component.scss']
 })
 export class AcceuilComponent implements OnInit {
-  Htype = ['s+0','s+1','s+2','s+3','others'] /* Htype stand for house type */
+  houses : any;
+  baseUrl = GlobalConstants.apiURL ;
 
-  numbers = [1,2,3,4,5,6,7,8,9]
-  constructor() { }
+  constructor(private Get: GetService ) { }
 
   ngOnInit() {
+    this.getHouses();
+  }
+  getHouses() {
+    this.Get.getHouses().subscribe(
+      (data:any) => { // data : string ==> json   django : list -> http (jamad ,json, string) tir fel hwee chwaya -> tahbet fel front end mayta jamad -> traje3ha 7aya bel json parse
+        this.houses = JSON.parse(data);
+      },
+      error => { console.log(error)}
+    )
   }
 
 }

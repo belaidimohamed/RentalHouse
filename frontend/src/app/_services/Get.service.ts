@@ -16,4 +16,15 @@ export class GetService {
     getComments(id: number) {
         return this.http.get(this.baseUrl + 'house/' + id + '/getComments/' , {headers: this.headers});
       }
+    getHouses(){
+      console.log(this.baseUrl + 'house/getHouses/')
+      const id = localStorage.getItem('id')
+      return this.http.get(this.baseUrl + 'house/getHouses/',{headers: this.headers})
+    }
+    getHouse(id:number) {
+      return this.http.get(this.baseUrl + 'house/' + id + '/getHouse/',{headers: this.headers})
+    }
+    getProfile(id:number) {
+      return this.http.get(this.baseUrl + 'profile/' + id + '/getProfile/',{headers: this.headers})
+    }
 }

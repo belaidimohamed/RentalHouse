@@ -11,11 +11,10 @@
           <tabset class="member-tabset">
             <tab style="font-size: 90px;" (selectTab)="favbuttons = true" heading="About">
             <div class="p-2 mt-2 font">
-              <p><strong>Type : </strong> &nbsp; s+1  </p>
-              <p><strong>Location : </strong>  &nbsp; Manouba </p>
-              <p><strong>Price : </strong>  &nbsp; 500 dt </p>
-              <p><strong>Description : </strong> je vous propose un agréable studio meublé location courte durée propreté et calme garantie proche de toutes commodités
-              prix selon la durée
+              <p><strong>Type : </strong> &nbsp; {{this.house.size}}  </p>
+              <p><strong>Location : </strong>  &nbsp; {{this.house.location}} </p>
+              <p><strong>Price : </strong>  &nbsp; {{this.house.price}} &nbsp; dt </p>
+              <p><strong>Description : </strong> {{this.house.description}}
               </p>
               <p><strong>Reserved places : </strong>  &nbsp; 1/2  </p>
               <br>
@@ -23,8 +22,10 @@
             </tab>
             <tab (selectTab)="favbuttons = false" heading="Contact">
               <div class="p-2 mt-2 font">
-                <p><strong>Email : </strong> &nbsp; mohamedbelaidi408@gmail.com  </p>
-              <p><strong>Phone : </strong>  &nbsp; 52664796 </p>
+                <p><strong>Email : </strong> &nbsp; {{house.email}}  </p>
+              <p><strong>Phone : </strong>  &nbsp; {{house.phone}} </p> <br>
+
+              <p><i style='color:grey; float:right'>Posted by :  {{house.owner_name}} </i>  </p>
               </div>
             </tab>
             <tab (selectTab)="favbuttons = false" heading="location">
@@ -54,7 +55,7 @@
         </div>
         <p></p>
 		    <h2> Comments : </h2>
-        <app-comments></app-comments> 
+        <!-- <app-comments></app-comments> -->
     </div>
   </div>
 </div>
