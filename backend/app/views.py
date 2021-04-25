@@ -50,7 +50,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
     @action(detail=True , methods=['GET'])
     def getProfile(self,request,pk=None):
-        profile = UserProfile.objects.all().filter(user=pk).values()[0] 
+        profile = UserProfile.objects.all().filter(user=pk).values()[0]
+        print(profile)
         data = json.dumps(profile)
         return JsonResponse(data, safe=False)
 
@@ -77,8 +78,28 @@ class HouseViewSet(viewsets.ModelViewSet):
 
     @action(detail=True , methods=['GET'])
     def getHouse(self,request,pk=None):
-        house = House.objects.all().filter(user=pk).values()[0] 
+        house = House.objects.all().filter(id=pk).values()[0] 
+        user = User.objects.get(id=house['owner_id'])
+        images = list(Image.objects.all().filter(house=house['id']).values('image','default'))
+        profile = UserProfile.objects.get(user=house['owner_id'])
+
+        house['images'] = images
+        house.update({
+            'owner_name':  user.username,
+            'email': profile.email,
+            'phone': profile.phone,
+        })
         data = json.dumps(house)
+        return JsonResponse(data, safe=False)
+        
+    @action(detail=False , methods=['GET'])
+    def getHouses(self,request):
+        houses = list(House.objects.all().values())
+
+        for i in range(len(houses)) :
+            images = list(Image.objects.all().filter(house=houses[i]['id']).values('image','default'))
+            houses[i]['images'] = images
+        data = json.dumps(houses)
         return JsonResponse(data, safe=False)
 
     @action(detail=True , methods=['POST'], permission_classes=[AllowAny])
