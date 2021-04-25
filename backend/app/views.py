@@ -114,8 +114,8 @@ class HouseViewSet(viewsets.ModelViewSet):
             location = request.data['location']
             price = request.data['price']
 
-            b = House(owner=user,size=size,location=location, price = price, description= description,res_places={},
-                      registered_p= {}, comments={})
+            b = House(owner=user,size=size,location=location, price = price, description= description,res_places="{}",
+                      registered_p= "{}", comments="[]")
             b.save()
             for i in request.data['images'] :
 
@@ -142,6 +142,7 @@ class HouseViewSet(viewsets.ModelViewSet):
     @action(detail=True , methods=['POST'])
     def addComment(self,request,pk=None):
         house = House.objects.get(id = pk)
+        print(house)
         comments = json.loads(house.comments)
         temp = {}
         temp['id'] = len(comments)

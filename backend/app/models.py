@@ -31,4 +31,4 @@ class Image(models.Model):
     image = models.ImageField(upload_to='houses/')
     default = models.BooleanField(default=False)
     def __str__(self):
-        return self.house + " - "
+        return str(self.house) + " - "

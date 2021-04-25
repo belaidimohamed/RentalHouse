@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
   })
 
   export class CommentsComponent implements OnInit {
-    pid: number ;
+    cid: number ;
     model: any = {};
     click = false ;
     comments: any ;
@@ -24,8 +24,8 @@ import { Component, OnInit } from '@angular/core';
     constructor(private route: ActivatedRoute, private apiPost: PostService, private router: Router,
       private apiGet: GetService, private alertify: AlertifyService) { }
     ngOnInit() {
-      this.route.params.subscribe(data => { this.pid = data.pId; });
-      this.apiGet.getComments(this.pid).subscribe((data: string) => {
+      this.route.params.subscribe(data => { this.cid = data.cid; });
+      this.apiGet.getComments(this.cid).subscribe((data: string) => {
         this.comments = JSON.parse(data) ;
       });
     }
@@ -37,10 +37,10 @@ import { Component, OnInit } from '@angular/core';
           this.onFocusComment = ! this.onFocusComment ;
           this.buttonCommentMargin = 50;
         }
-        else if (this.comment != '' && this.onFocusCommentArea) { 
+        else if (this.comment != '' && this.onFocusCommentArea) {
           this.buttonCommentMargin = 50;
-        } 
-        else { 
+        }
+        else {
           this.buttonCommentMargin = 18;
          } }
       else {
@@ -62,10 +62,10 @@ import { Component, OnInit } from '@angular/core';
       this.model.jaims = [] ;
       this.model.reponses = {} ;
       this.model.time = new Date();
-  
-      this.apiPost.addComment(this.model, this.pid).subscribe(
+
+      this.apiPost.addComment(this.model, this.cid).subscribe(
         () => { this.alertify.success('Comment sent successfully');
-                this.apiGet.getComments(this.pid).subscribe((data: string) => {
+                this.apiGet.getComments(this.cid).subscribe((data: string) => {
                   this.comments = JSON.parse(data) ;
                 });
         },
