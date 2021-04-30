@@ -11,6 +11,9 @@ export class PostService {
     'Content-type': 'application/json',
     Authorization: 'Token ' + localStorage.getItem('token')
   } );
+  headers1 = new HttpHeaders({
+    Authorization: 'Token ' + localStorage.getItem('token')
+  } );
 
   constructor(private http: HttpClient, private authService: AuthService) { }
   baseUrl = GlobalConstants.apiURL ;
@@ -25,5 +28,11 @@ export class PostService {
   }
   addComment(model: any , id: number) {
     return this.http.post(this.baseUrl + 'house/' + id + '/addComment/', model, { headers: this.headers});
+  }
+  addLike(model: any, id: number) {
+    return this.http.post(this.baseUrl + 'house/' + id + '/Like/' , model , { headers: this.headers1 });
+  }
+  addReply(model: any, id: number) {
+    return this.http.post(this.baseUrl + 'house/' + id + '/Reply/' , model , { headers: this.headers1 });
   }
 }
