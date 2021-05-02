@@ -103,9 +103,7 @@ class HouseViewSet(viewsets.ModelViewSet):
         return JsonResponse(data, safe=False)
 
     @action(detail=True , methods=['POST'], permission_classes=[AllowAny])
-    def createHouse(self,request,pk=None):
-        print('fuck yasmine')
-        # print(request.data)
+    def createHouse(self,request,pk=None,path=''):
         user = User.objects.get(id=pk)
         self.check_object_permissions(request, user)
         if request.method == "POST":
@@ -131,10 +129,10 @@ class HouseViewSet(viewsets.ModelViewSet):
 
     @action(detail=True , methods=['GET'])
     def getComments(self,request,pk=None):
-        comments = House.objects.all().filter(id=pk).values('comments')[0]['comments']
+        comments = House.objects.all().filter(id=pk).values('comments')[0]['comments'] 
         comments = json.loads(comments)
         for i in range(len(comments)) :
-            infos = UserProfile.objects.all().filter(user=comments[i]['user']).values('user')[0]
+            infos = User.objects.all().filter(id=comments[i]['user']).values('username')[0]
             comments[i].update(infos)
         data = json.dumps(comments)
         return JsonResponse(data, safe=False)
@@ -152,3 +150,43 @@ class HouseViewSet(viewsets.ModelViewSet):
         house.comments = json.dumps(comments)
         house.save()
         return HttpResponse(status=201)
+
+    @action(detail=True , methods=['POST'])
+    def Like(self,request,pk=None):
+        house = House.objects.get(id = pk)
+        comments = json.loads(house.comments)
+        uid = int(request.data['userId'])
+        cid = int(request.data['commentId'])
+        print( comments[cid]['jaims'])
+        if uid in set().union(*(d.values() for d in comments[cid]['jaims'])) :
+            comments[cid]['jaims'] =  [i for i in comments[cid]['jaims'] if (i['id']!=uid)]
+            house.comments = json.dumps(comments)
+        else:
+            x={}
+            name = User.objects.all().filter(id=uid).values('username')[0]['username']
+            x['name'] = name
+            x['id'] = uid
+            x['type'] = 'thumb'
+            comments[cid]['jaims'].append(x)
+            house.comments = json.dumps(comments)
+        house.save()
+        return HttpResponse(status=200)
+
+    @action(detail=True , methods=['POST'])
+    def Reply(self,request,pk=None):
+        house = House.objects.get(id = pk)
+        comments = json.loads(house.comments)
+        uid = int(request.data['userid'])
+        cid = int(request.data['commentid'])
+        time = request.data['time']
+        reply = request.data['reply']
+        x={}
+        name = User.objects.all().filter(id=uid).values('username')[0]['username']
+        x['name'] = name
+        x['id'] = uid
+        x['time'] = time
+        x['reply'] = reply
+        comments[cid]['reponses'].append(x)
+        house.comments = json.dumps(comments)
+        house.save()
+        return HttpResponse(status=200)

@@ -17,6 +17,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatButtonModule } from '@angular/material/button';
+import {MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
@@ -34,6 +35,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
 
 import { appRoutes } from './routes';
 import { SafePipe } from './_pipes/safe.pipe';
+import { ToollistPipe } from './card-details/comments/toollist.pipe' ;
 import { ImageUploadModule } from 'angular2-image-upload';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HouseResolver } from './_resolvers/house-resolver';
@@ -58,6 +60,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     FavoritesComponent,
     AddhouseComponent,
     SafePipe,
+    ToollistPipe,
     CommentsComponent,
    ],
   imports: [
@@ -70,6 +73,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
 
     MatDialogModule,
     MatRadioModule,
+    MatTooltipModule,
     MatCheckboxModule,
     MatSelectModule,
     MatStepperModule,

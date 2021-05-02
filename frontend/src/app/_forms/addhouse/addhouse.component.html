@@ -58,7 +58,7 @@
   </div>
   <br>
 
-  <button type="button" class="btn btn-success float-right" (click)="publish()" >Publish </button>
+  <button type="button" class="btn btn-success float-right" (click)="publish()" [routerLink]="['/acceuil']" >Publish </button>
   <br>
 
   <div *ngIf="selectedFile" class="img-preview-container">

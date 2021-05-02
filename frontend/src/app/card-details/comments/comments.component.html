@@ -8,5 +8,43 @@
             <button class="btn btn-success" (mousedown)="SendComment()">Add Comment</button>
         </div>
         <hr>  
+        <div *ngFor="let comment of comments">
+            <div>
+            <strong> &nbsp;{{comment.username}} </strong>  &nbsp;  &#9702;  &nbsp; <i class="time"> {{comment.time | date:'yyyy-MM-dd'}} </i> 
+            <div class="comment">
+                {{comment.comment}} 
+            </div>
+            <div  class="jaimeR time">
+                <a  class="a" 
+                    mat-icon-button
+                    [ngStyle]="{'color': getcolor(comment.id)}"
+                    [matTooltip]="comment.jaims|toollist"
+                    matTooltipPosition= 'after'
+                    matTooltipClass="tooltip-list"
+                    type="button" (click)="LikeComment(comment.id)">
+                  <i class="fa fa-thumbs-up"></i><span *ngIf="comment.jaims">&nbsp; {{comment.jaims.length}}&nbsp; </span>
+                </a>
+                <a class="a" type="button" (click)="clickReply(comment.id)">
+                    Reply &nbsp;<i class="fa fa-reply-all"></i>
+                </a>
+                <div *ngIf="onclickReponse[comment.id]">
+                    <textarea type="text" placeholder=" Add a response here .. " class ="commentadd"
+                    (focus)="FocusReponse()" (focusout)="FocusReponse()"  [(ngModel)]="reply"></textarea><br>
+                    <div *ngIf="onFocusReponse" class="commentbtn" [ngStyle]="{'margin-left':   buttonReplyMargin + '%'}">
+                        <button class="btn btn-secondary" (click)="cancelReply()">Cancel</button> &nbsp;
+                        <button class="btn btn-success" (mousedown)="SendReply(comment.id)">Add Reply</button>
+                    </div>
+                </div>
+                <div *ngFor="let rep of comment.reponses">
+                    <div>
+                        <strong> &nbsp;{{rep.name}} </strong>  &nbsp;  &#9702;  &nbsp; <i class="time"> {{rep.time | date:'yyyy-MM-dd'}} </i> 
+                        <div class="comment">
+                            {{rep.reply}} 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -65,7 +65,6 @@ export class CardDetailsComponent implements OnInit {
   }
   makeGallery(photos: any) {
     this.galleryImages = [] ;
-    console.log("test 3")
     photos.forEach(element => {
       this.galleryImages.push({
         small: this.baseUrl + 'media/'+ element.image,
@@ -73,5 +72,4 @@ export class CardDetailsComponent implements OnInit {
         big:  this.baseUrl + 'media/'+ element.image,
       })
     });
-    console.log(this.galleryImages)
   }}
