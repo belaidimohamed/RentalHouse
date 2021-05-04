@@ -196,6 +196,7 @@ class HouseViewSet(viewsets.ModelViewSet):
         x['id'] = uid
         x['time'] = time
         x['reply'] = reply
+        x['reply_id'] = len(comments[cid]['reponses'])
         comments[cid]['reponses'].append(x)
         house.comments = json.dumps(comments)
         house.save()
@@ -227,13 +228,14 @@ class HouseViewSet(viewsets.ModelViewSet):
         uid = int(request.data['uid'])
         # self.check_object_permissions(request, user) TODO later check user for further security
         cid = int(request.data['cid'])
-        del comments[cid]
+        rid = int(request.data['rid'])
+        del comments[cid]['reponses'][rid]
 
-        if (cid != len(comments)):
+        if (rid != len(comments[cid]['reponses'])):
             # reseting Comments id so nothing get worst
-            for i in range(cid, len(comments)):
-                print("for", comments[i]['id'])
-                comments[i]['id'] = i
+            for i in range(rid, len(comments[cid]['reponses'])):
+                print("for", comments[cid]['reponses'][i]['reply_id'])
+                comments[cid]['reponses'][i]['reply_id'] = i
 
         house.comments = json.dumps(comments)
         house.save()
