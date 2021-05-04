@@ -70,7 +70,6 @@ export class RegisterComponent implements OnInit {
     return message
   }
   register() {
-    console.log(this.model);
     this.auth.register(this.model);
     this.cancelRegister()
   }

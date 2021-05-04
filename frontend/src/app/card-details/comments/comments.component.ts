@@ -12,7 +12,9 @@ import { Component, OnInit } from '@angular/core';
   })
 
   export class CommentsComponent implements OnInit {
-    cid: number ;
+    hid:number ;
+    userId: number ;
+
     color = "grey";
     like: any = {} ;
     model: any = {};
@@ -34,11 +36,15 @@ import { Component, OnInit } from '@angular/core';
     constructor(private route: ActivatedRoute, private apiPost: PostService, private router: Router,
       private apiGet: GetService, private alertify: AlertifyService) { }
     ngOnInit() {
-      this.route.params.subscribe(data => { this.cid = data.cid; });
-      this.apiGet.getComments(this.cid).subscribe((data: string) => {
+      this.userId = parseInt(localStorage.getItem('id'));
+      this.route.params.subscribe(data => { this.hid = data.hid; });
+
+      this.apiGet.getComments(this.hid).subscribe((data: string) => {
         this.comments = JSON.parse(data) ;
       });
     }
+
+    // ----------------------------------------------------------- comment stuff ---------------------------------------------------------------------
 
     FocusComment() {
       if (!this.click) {
@@ -67,14 +73,46 @@ import { Component, OnInit } from '@angular/core';
 
     SendComment() {
       this.model.comment = this.comment ;
-      this.model.user = parseInt(localStorage.getItem('id'));
+      this.model.user = this.userId
       this.model.jaims = [] ;
       this.model.reponses = [] ;
       this.model.time = new Date();
 
-      this.apiPost.addComment(this.model, this.cid).subscribe(
-        () => { this.alertify.success('Comment sent successfully');
-                this.apiGet.getComments(this.cid).subscribe((data: string) => {
+      this.apiPost.addComment(this.model, this.hid).subscribe(
+        () => {
+          this.alertify.success('Comment sent successfully');
+          this.apiGet.getComments(this.hid).subscribe((data: string) => {
+            this.comments = JSON.parse(data) ;
+          }); },
+        error => {
+          console.log(error);
+          this.alertify.error(error); },
+      );
+      this.cancelComment();
+    }
+
+    DeleteComent(cid:number) {
+
+      this.apiPost.deleteComment({'cid':cid ,'uid':this.userId} , this.hid ).subscribe(
+        () => {
+          this.alertify.message('Comment Deleted successfully !');
+          this.apiGet.getComments(this.hid).subscribe((data: string) => {
+            this.comments = JSON.parse(data) ;
+          });},
+        error => {
+          console.log(error);
+          this.alertify.error(error); },
+      );
+    }
+
+// ----------------------------------------------------------- Like stuff ---------------------------------------------------------------------
+
+    LikeComment(cid: number) {
+      this.like.commentId = cid ;
+      this.like.userId = this.userId
+      this.apiPost.addLike(this.like, this.hid).subscribe(
+        () => {
+                this.apiGet.getComments(this.hid).subscribe((data: string) => {
                   this.comments = JSON.parse(data) ;
                 });
         },
@@ -82,44 +120,20 @@ import { Component, OnInit } from '@angular/core';
           console.log(error);
           this.alertify.error(error); },
       );
-      this.cancelComment();
-    }
-    LikeComment(cid: number) {
-      this.like.commentId = cid ;
-      this.like.userId = parseInt(localStorage.getItem('id'));
-      this.apiPost.addLike(this.like, this.cid).subscribe(
-        () => {
-                this.apiGet.getComments(this.cid).subscribe((data: string) => {
-                  this.comments = JSON.parse(data) ;
-                });
-        },
-        error => {
-          console.log(error);
-          this.alertify.error(error); },
-       );
     }
     getcolor(cid: number) {
-      this.color = "grey"
+      this.color = "grey";
       this.comments[cid].jaims.forEach(element => {
-        if (parseInt(localStorage.getItem('id')) == element.id)
+        if (this.userId == element.id)
         {this.color = "rgb(51, 151, 21)"}
       });
-       return this.color
+      return this.color
     }
-    clickReply(cid: number) {
-      this.comments.forEach(element => {
-        if (cid == element.id)
-          { 
-            if (this.onclickReponse[element.id] == true)
-            { this.onclickReponse[element.id] = false ;}
-            else {this.onclickReponse[element.id] = true ;}
-          }  
-        else {this.onclickReponse[element.id] = false;}
-      });
-    }
+
+// ------------------------------------------------------------ Reply stuff ---------------------------------------------------------------------
     FocusReponse() {
       this.onFocusReplyArea = !this.onFocusReplyArea;
-  
+
       if (this.reply == '') {
         this.onFocusReponse = ! this.onFocusReponse ;
       } else if (this.reply != '' && this.onFocusReplyArea) {
@@ -127,6 +141,17 @@ import { Component, OnInit } from '@angular/core';
       } else {
         this.buttonReplyMargin = 18;
       }
+    }
+    clickReply(cid: number) {
+      this.comments.forEach(element => {
+        if (cid == element.id)
+          {
+            if (this.onclickReponse[element.id] == true)
+            { this.onclickReponse[element.id] = false ;}
+            else {this.onclickReponse[element.id] = true ;}
+          }
+        else {this.onclickReponse[element.id] = false;}
+      });
     }
     cancelReply() {
       this.reply = '' ;
@@ -136,12 +161,13 @@ import { Component, OnInit } from '@angular/core';
     SendReply(cid: number) {
       this.reponse.commentid = cid ;
       this.reponse.reply = this.reply ;
-      this.reponse.userid = parseInt(localStorage.getItem('id'));
+      this.reponse.userid = this.userId
       this.reponse.time = new Date();
 
-      this.apiPost.addReply(this.reponse, this.cid).subscribe(
-        () => { this.alertify.success('Reply sent successfully');
-                this.apiGet.getComments(this.cid).subscribe((data: string) => {
+      this.apiPost.addReply(this.reponse, this.hid).subscribe(
+        () => { this.cancelReply();
+                this.clickReply(this.hid);
+                this.apiGet.getComments(this.hid).subscribe((data: string) => {
                   this.comments = JSON.parse(data) ;
                 });
         },
@@ -149,6 +175,6 @@ import { Component, OnInit } from '@angular/core';
           console.log(error);
           this.alertify.error(error); },
       );
-      this.cancelReply();
     }
+
   }

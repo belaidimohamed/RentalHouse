@@ -9,7 +9,7 @@ export class HouseResolver implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot) {
     // tslint:disable-next-line: radix
-    return this.get.getHouse(parseInt(route.paramMap.get('cid'))).pipe(
+    return this.get.getHouse(parseInt(route.paramMap.get('hid'))).pipe(
         map((results:any) => {
           return JSON.parse(results);
     })); }

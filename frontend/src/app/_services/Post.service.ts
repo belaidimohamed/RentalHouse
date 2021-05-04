@@ -35,4 +35,7 @@ export class PostService {
   addReply(model: any, id: number) {
     return this.http.post(this.baseUrl + 'house/' + id + '/Reply/' , model , { headers: this.headers1 });
   }
+  deleteComment(model:any , id:number ) {
+    return this.http.post(this.baseUrl + 'house/' + id + '/deleteComment/' , model , { headers: this.headers1 });
+  }
 }

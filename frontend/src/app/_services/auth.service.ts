@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AlertifyService } from './alertify.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -10,18 +12,16 @@ export class AuthService {
   baseUrl = GlobalConstants.apiURL ;
   username: string;
   s = 0;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient , private alertify: AlertifyService , private router : Router) { }
   login(model: any) {
     this.username = model.username  ;
-    console.log(model);
     return this.http.post(this.baseUrl + 'api/token/', model).pipe(
       map((response: any) => { const token = response ;
-                                console.log(response);
                                if (token) {
                          localStorage.setItem('name', token.name);
                          localStorage.setItem('token', token.token);
                          localStorage.setItem('id', token.user_id);
-                         console.log(token);
+                         this.router.navigate(['/acceuil']);
                        }})
     );
   }
@@ -29,9 +29,8 @@ export class AuthService {
   register(model: any) {
     let user = {"username":model.name,"password":model.password}
     return this.http.post(this.baseUrl + 'users/', user).subscribe((response:any) => {
-      console.log(response);
       this.http.post(this.baseUrl + 'profile/'+ response.id + '/editProfile/', model).subscribe(response => {
-        console.log('You account has been added succefully !')
+        this.alertify.success('You account has been added succefully !')
       })
     });
   }

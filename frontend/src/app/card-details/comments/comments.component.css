@@ -21,7 +21,7 @@
     height: 90px;
 }
 .comment{
-    margin-left: 5%;
+    margin-left: 4%;
 }
 .time {
     font-size: 10;
@@ -29,9 +29,9 @@
 	color: grey;
 }
 .jaimeR {
-    margin-left: 5%;
-    margin-bottom: 0.1%;
-    margin-top: 0.1%;
+    margin-left: 4%;
+    margin-bottom: 4px;
+    margin-top: -4px;
 }
 .a {
     color: grey;
@@ -48,3 +48,11 @@
 .tooltip-list {
     white-space: pre;
   }
+
+.user {
+  margin-bottom: 5px;
+}
+.reply {
+  font-style: normal;
+  color: rgb(88, 88, 88);
+}

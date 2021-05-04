@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AlertifyService } from './../_services/alertify.service';
 import { AuthService } from './../_services/auth.service';
 import { RegisterComponent } from './../_forms/register/register.component';
@@ -15,7 +16,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private auth : AuthService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService ,
+    private  router: Router
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class NavbarComponent implements OnInit {
   }
   logout() {
     localStorage.clear();
+    this.router.navigate(['/home']);
     this.alertify.warning('logged out succefully ! ');
   }
   openRegister(key: number) {

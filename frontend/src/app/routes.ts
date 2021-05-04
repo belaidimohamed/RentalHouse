@@ -11,9 +11,9 @@ export const appRoutes : Routes = [
   {path:'acceuil', component:AcceuilComponent},
   {path:'favorits', component:FavoritesComponent},
 
-  {path:'details/:cid', component:CardDetailsComponent,
+  {path:'details/:hid', component:CardDetailsComponent,
   resolve: { house : HouseResolver  }},
   {path:'addhouse', component:AddhouseComponent},
 
-  { path: '**', redirectTo: 'acceuil' , pathMatch: 'full'}
+  { path: '**', redirectTo: 'home' , pathMatch: 'full'}
 ];
