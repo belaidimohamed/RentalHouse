@@ -59,7 +59,7 @@
             <div>
               <strong class="reply"> &nbsp;{{ rep.name }} </strong> &nbsp; &#9702; &nbsp;
               <i class="time"> {{ rep.time | date: "yyyy-MM-dd" }} </i>
-              <span *ngIf="comment.user == this.userId" (click)="DeleteComent(comment.id)"> &nbsp; &#9702; &nbsp; <i
+              <span *ngIf="comment.user == this.userId" (click)="DeleteReply( rep.reply_id , comment.id)"> &nbsp; &#9702; &nbsp; <i
                 class="fa fa-trash"></i></span>
               <div class="comment reply">
                 {{ rep.reply }}

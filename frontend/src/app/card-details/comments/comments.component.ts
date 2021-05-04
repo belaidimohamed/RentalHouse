@@ -176,5 +176,16 @@ import { Component, OnInit } from '@angular/core';
           this.alertify.error(error); },
       );
     }
-
+    DeleteReply(rid : number, cid: number) {
+      this.apiPost.deleteReply({'rid':rid,'cid':cid ,'uid':this.userId} , this.hid ).subscribe(
+        () => {
+          this.alertify.message('Reply Deleted successfully !');
+          this.apiGet.getComments(this.hid).subscribe((data: string) => {
+            this.comments = JSON.parse(data) ;
+          });},
+        error => {
+          console.log(error);
+          this.alertify.error(error); },
+      );
+    }
   }
