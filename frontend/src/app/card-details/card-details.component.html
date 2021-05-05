@@ -49,9 +49,14 @@
           <div class="col-6">
             <button type="button" class="btn btn-success  btn-md btn-block">Reserve place &nbsp; <i class="fa fa-calendar-check-o" aria-hidden="true"></i></button>
           </div>
-          <div class="col-6">
-            <button type="button" class="btn btn-secondary  btn-md btn-block">Add to favorits  &nbsp; <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+
+          <div class="col-6" *ngIf="!this.house.favorit">
+            <button type="button" class="btn btn-secondary  btn-md btn-block" (click) = "addToFavorits()">Add to favorits  &nbsp; <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
           </div>
+          <div class="col-6" *ngIf="this.house.favorit">
+            <button type="button" class="btn btn-warning  btn-md btn-block" (click) = "removeFavorit()">Remove from favorits  &nbsp; <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+          </div>
+
         </div>
         <p></p>
 		    <h2> Comments : </h2>

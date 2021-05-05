@@ -1,4 +1,4 @@
-<div *ngIf="this.route == '/'  || this.route.includes('/home') || this.route.includes('/#about') || this.route.includes('/#team') || this.route.includes('/#contact') ;else other ">
+<div *ngIf="this.route == '/'  || this.route.includes('/home') || this.route.includes('/#about') || this.route.includes('/#team') || this.route.includes('/#contact')|| this.route.includes('/#page-top');else other ">
   <div>
     <router-outlet></router-outlet>
   </div>

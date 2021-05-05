@@ -17,14 +17,16 @@ export class GetService {
         return this.http.get(this.baseUrl + 'house/' + id + '/getComments/' , {headers: this.headers});
       }
     getHouses(){
-      console.log(this.baseUrl + 'house/getHouses/')
       const id = localStorage.getItem('id')
       return this.http.get(this.baseUrl + 'house/getHouses/',{headers: this.headers})
     }
-    getHouse(id:number) {
-      return this.http.get(this.baseUrl + 'house/' + id + '/getHouse/',{headers: this.headers})
+    getHouse(model:any,id:number) {
+      return this.http.post(this.baseUrl + 'house/' + id + '/getHouse/',model,{headers: this.headers})
     }
     getProfile(id:number) {
       return this.http.get(this.baseUrl + 'profile/' + id + '/getProfile/',{headers: this.headers})
+    }
+    getFavorits(id:number) {
+      return this.http.get(this.baseUrl + 'profile/' + id + '/getFavorits/',{headers: this.headers})
     }
 }

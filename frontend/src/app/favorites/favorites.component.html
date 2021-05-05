@@ -1,3 +1,20 @@
-<p>
-  favorites works!
-</p>
+<div class ="row">
+  <div  *ngFor="let house of favorits" class="col-md-2" >  <!-- put 3 cards per line when screen is big (bootstrap) -->
+    <div class="card mb-4 box-shadow cardBox" >
+      <img class="card-img-top image" alt="Home" [src]="baseUrl + 'media/'+house.images[0].image" alt="none">
+      <div class="card-body">
+        <div class="card-text">
+          <p><strong>Type : </strong> &nbsp; {{house.size}}  </p>
+          <p><strong>Location : </strong>  &nbsp; {{house.location}} </p>
+          <p><strong>Price : </strong>  &nbsp; {{house.price}} &nbsp; dt </p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <a type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="['/details', house.id]">Details</a>
+          </div>
+          <small class="text-muted">9 mins</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

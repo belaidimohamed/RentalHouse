@@ -41,4 +41,10 @@ export class PostService {
   deleteReply(model:any , id:number) {
     return this.http.post(this.baseUrl + 'house/' + id + '/deleteReply/' , model , { headers: this.headers1 });
   }
+  addToFavorits(model:any , id:number) {
+    return this.http.post(this.baseUrl + 'profile/' + id + '/addToFavorits/' , model , { headers: this.headers1 });
+  }
+  removeFavorit(model:any , id:number) {
+    return this.http.post(this.baseUrl + 'profile/' + id + '/removeFavorit/' , model , { headers: this.headers1 });
+  }
 }

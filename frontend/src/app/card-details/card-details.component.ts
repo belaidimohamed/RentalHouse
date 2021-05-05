@@ -1,3 +1,5 @@
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { PostService } from 'src/app/_services/Post.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryAnimation } from 'ngx-gallery-9';
@@ -25,6 +27,8 @@ export class CardDetailsComponent implements OnInit {
   mapsURL = `https://maps.google.com/maps?q=${this.positionMap.Coordinates}&t=&z=20&ie=UTF8&iwloc=&output=embed`;
 
   constructor(
+    private alertify: AlertifyService,
+    private post : PostService,
     private get : GetService ,
     private route: ActivatedRoute) { }
 
@@ -72,4 +76,23 @@ export class CardDetailsComponent implements OnInit {
         big:  this.baseUrl + 'media/'+ element.image,
       })
     });
-  }}
+  }
+  addToFavorits() {
+    this.post.addToFavorits( this.house.id ,parseInt(localStorage.getItem('id')) ).subscribe(
+      () => {
+        this.alertify.success('House added to favorits succefully !'),
+        this.house.favorit = true ;
+      },
+      error => this.alertify.warning('You already added this house to favorits')
+    )
+  }
+  removeFavorit() {
+    this.post.removeFavorit( this.house.id ,parseInt(localStorage.getItem('id')) ).subscribe(
+      () => {
+        this.alertify.success('House removed from favorits succefully !'),
+        this.house.favorit = false;
+      },
+      error => this.alertify.warning('You already removed this house from favorits')
+    )
+  }
+}
