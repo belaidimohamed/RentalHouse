@@ -6,5 +6,4 @@ from django.contrib.auth.models import User
 admin.site.register(UserProfile)
 admin.site.register(House)
 admin.site.register(Image)
-
-
+admin.site.register(Favorits)

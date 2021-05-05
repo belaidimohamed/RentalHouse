@@ -52,7 +52,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'])
     def getProfile(self, request, pk=None):
         profile = UserProfile.objects.all().filter(user=pk).values()[0]
-        print(profile)
         data = json.dumps(profile)
         return JsonResponse(data, safe=False)
 
@@ -72,6 +71,39 @@ class ProfileViewSet(viewsets.ModelViewSet):
             b.save()
             return HttpResponse(status=201)
 
+    @action(detail=True, methods=['POST'])
+    def addToFavorits(self, request, pk=None):
+        user = User.objects.get(id=pk)
+        house = House.objects.get(id=request.data)
+
+        if len(Favorits.objects.all().filter(user=user.id, house=house.id).values()) == 0:
+            f = Favorits(user=user, house=house)
+            f.save()
+            return HttpResponse(status=201)
+        else:
+            return HttpResponse(status=400)
+
+    @action(detail=True, methods=['POST'])
+    def removeFavorit(self, request, pk=None):
+        user = User.objects.get(id=pk)
+        house = House.objects.get(id=request.data)
+
+        Favorits.objects.all().filter(user=user.id, house=house.id).delete()
+        return HttpResponse(status=200)
+
+    @action(detail=True, methods=['GET'])
+    def getFavorits(self, request, pk=None):
+        user = User.objects.get(id=pk)
+        fav = [i['house_id'] for i in list(Favorits.objects.all().filter(
+            user=user.id).values('house_id'))]
+        print(fav)
+        favHouses = list(House.objects.all().filter(pk__in = fav).values())
+        print(favHouses)
+        for house in favHouses :
+            house['images'] = list(Image.objects.all().filter(house=house['id']).values('image', 'default'))
+
+        return JsonResponse(json.dumps(favHouses), safe=False)
+
 
 class HouseViewSet(viewsets.ModelViewSet):
     queryset = House.objects.all()
@@ -79,19 +111,24 @@ class HouseViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (AllowAny,)
 
-    @action(detail=True, methods=['GET'])
+    @action(detail=True, methods=['POST'])
     def getHouse(self, request, pk=None):
         house = House.objects.all().filter(id=pk).values()[0]
-        user = User.objects.get(id=house['owner_id'])
+        owner = User.objects.get(id=house['owner_id'])
+        print(request.data)
+        user = User.objects.get(id=request.data['uid'])
+        favorit =  len(Favorits.objects.all().filter(user=user.id, house=house['id']).values()) != 0 # true if this house is favorit
+
         images = list(Image.objects.all().filter(
             house=house['id']).values('image', 'default'))
         profile = UserProfile.objects.get(user=house['owner_id'])
 
         house['images'] = images
         house.update({
-            'owner_name':  user.username,
+            'owner_name':  owner.username,
             'email': profile.email,
             'phone': profile.phone,
+            'favorit': favorit,
         })
         data = json.dumps(house)
         return JsonResponse(data, safe=False)
@@ -131,6 +168,8 @@ class HouseViewSet(viewsets.ModelViewSet):
                 img.save()
             return HttpResponse({'id': b.id}, status=201)
         return HttpResponse({'error': 'Failed to create house'}, status=400)
+
+# ----------------------------- Comment stuff ------------------------------------------------------------------------------------
 
     @action(detail=True, methods=['GET'])
     def getComments(self, request, pk=None):
@@ -246,5 +285,3 @@ class HouseViewSet(viewsets.ModelViewSet):
 # , {\"id\": 1, \"comment\": \"why\", \"user\": 1, \"jaims\": [], \"reponses\": [], \"time\": \"2021-05-02T09:47:57.932Z\"}
 #  , {\"id\": 2, \"comment\": \"fuck\", \"user\": 1, \"jaims\": [], \"reponses\": [], \"time\": \"2021-05-02T09:47:57.932Z\"}
 # ]"
-
-# for i
