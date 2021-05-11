@@ -39,7 +39,7 @@ import { ToollistPipe } from './card-details/comments/toollist.pipe' ;
 import { ImageUploadModule } from 'angular2-image-upload';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HouseResolver } from './_resolvers/house-resolver';
-
+import { MatSliderModule } from '@angular/material/slider';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -85,6 +85,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     NgxGalleryModule,
     NgxSliderModule,
     AutocompleteLibModule,
+    MatSliderModule,
 
     ImageUploadModule.forRoot(),
     TabsModule.forRoot(),

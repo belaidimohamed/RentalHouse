@@ -17,7 +17,6 @@ export class GetService {
         return this.http.get(this.baseUrl + 'house/' + id + '/getComments/' , {headers: this.headers});
       }
     getHouses(){
-      const id = localStorage.getItem('id')
       return this.http.get(this.baseUrl + 'house/getHouses/',{headers: this.headers})
     }
     getHouse(model:any,id:number) {

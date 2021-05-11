@@ -21,3 +21,10 @@
 .phone {
   margin-bottom: 25px;
 }
+
+// We need to use ::ng-deep to overcome view encapsulation
+::ng-deep {
+  .custom-slider {
+    bottom:15px;
+  }
+}

@@ -14,8 +14,6 @@ export class AppComponent {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
        this.route = e.url;
-       console.log(this.route)
-       console.log(this.route.includes('/home'))
       }
     });
     this.auth.username = localStorage.getItem('name');

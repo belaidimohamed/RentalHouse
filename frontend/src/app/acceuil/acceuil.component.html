@@ -4,51 +4,56 @@
 
       <br>
       <div class="container">
-      <div class="row">
-        <div class="col-sm phone">
+        <div class="row">
 
-            <ng-autocomplete
-              id="auto"
-              [data]="states"
-              [searchKeyword]="keyword"
-              placeholder="Choose your location "
-              [(ngModel)]	 = "model.location"
-              [itemTemplate]="itemTemplate"
-              [notFoundTemplate]="notFoundTemplate">
-            </ng-autocomplete>
+            <div class="col-sm phone">
+              <ng-autocomplete
+                id="auto"
+                [data]="states"
+                [searchKeyword]="keyword"
+                placeholder="Choose your location "
+                [(ngModel)]	 = "filtre.location"
+                [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
 
-            <ng-template #itemTemplate let-item>
-              <a [innerHTML]="item"></a>
-            </ng-template>
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item"></a>
+              </ng-template>
 
-            <ng-template #notFoundTemplate let-notFound>
-              <div [innerHTML]="notFound"></div>
-            </ng-template>
-      </div>
-        <div class="col-sm phone">
-          <select class="form-control" id="exampleFormControlSelect1"   [(ngModel)]	 = "model.type">
-            <option>S+0</option>
-            <option selected >S+1</option>
-            <option>S+2</option>
-            <option>S+3</option>
-            <option>S+4</option>
-            <option>s+5</option>
-          </select>
-        </div>
-        <div class="col-sm phone">
-          <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ngx-slider>
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+            <div class="col-sm phone">
+              <select class="form-control" id="exampleFormControlSelect1"   [(ngModel)]	 = "filtre.type">
+                <option selected="true" disabled="disabled">Choose house type</option>
+                <option>S+0</option>
+                <option>S+1</option>
+                <option>S+2</option>
+                <option>S+3</option>
+                <option>S+4</option>
+                <option>s+5</option>
+              </select>
+            </div>
+            <div class="col-sm phone custom-slider">
+              <ngx-slider [(value)]="filtre.minValue" [(highValue)]="filtre.maxValue" [options]="options"></ngx-slider>
+            </div>
+            <br> <br>
+
         </div>
       </div>
     </div>
-      <br> <br> <!-- search , select , price -->
 
+    <div class="mt-1 mb-5">
+        <a type="button" class="btn btn-sm btn-outline-primary center" (click)="filtrer()">Apply filter</a>
     </div>
 
     <div class="row">
       <div class="card mb-4 col-md-3 box-shadow cardBox" >
         <span class="plus">  <i class="fa fa-plus fa-5x" aria-hidden="true"></i> </span>
           <div class="btn-group mt-3 mb-4">
-              <a type="button" class="btn btn-sm btn-outline-success center" [routerLink]="['/addhouse']">Add a new house</a>
+              <a type="button" class="btn btn-sm btn-outline-success center" (click)="filtrer()" >Add a new house</a>
           </div>
       </div>
 
@@ -57,7 +62,12 @@
           <img class="card-img-top image" alt="Home" [src]="baseUrl + 'media/'+house.images[0].image" alt="none">
           <div class="card-body">
             <div class="card-text">
-              <p><strong>Type : </strong> &nbsp; {{house.size}}  </p>
+              <p>
+                <strong>Type : </strong> &nbsp; {{house.size}}
+                  <span class="float-right" (mouseover)="hover=house.id" (mouseleave)="hover=false"
+                        [ngStyle]="{color: hover==house.id  ? 'red' : 'black' }"
+                        *ngIf="house.owner_id == this.userId" (click)="DeleteHouse(house.id)"> <i class="fa fa-trash fa-lg"></i></span>
+              </p>
               <p><strong>Location : </strong>  &nbsp; {{house.location}} </p>
               <p><strong>Price : </strong>  &nbsp; {{house.price}} &nbsp; dt </p>
             </div>

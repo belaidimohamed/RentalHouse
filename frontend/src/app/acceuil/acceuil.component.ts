@@ -1,3 +1,5 @@
+import { AlertifyService } from './../_services/alertify.service';
+import { PostService } from 'src/app/_services/Post.service';
 import { Component, OnInit } from '@angular/core';
 import { GlobalConstants } from '../global-constant';
 import { GetService } from '../_services/Get.service';
@@ -11,13 +13,14 @@ import { Options, LabelType } from '@angular-slider/ngx-slider';
 })
 
 export class AcceuilComponent implements OnInit {
-  houses : any;
+  houses: any;
+  hover: false;
+  userId: number;
   baseUrl = GlobalConstants.apiURL ;
   keyword = 'name';
   states = [];
-  model: any = {'type':"S+1",'images':[]};
-  minValue: number = 100;
-  maxValue: number = 400;
+
+  filtre: any = {'location':null,'type':'Choose house type','minValue':0,'maxValue':1000};
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -33,9 +36,13 @@ export class AcceuilComponent implements OnInit {
     }
   };
 
-  constructor(private Get: GetService ) { }
+  constructor(
+      private Get: GetService,
+      private alertify : AlertifyService,
+      private post: PostService) { }
 
   ngOnInit() {
+    this.userId = parseInt(localStorage.getItem('id'));
     this.getHouses();
   }
   getHouses() {
@@ -45,6 +52,22 @@ export class AcceuilComponent implements OnInit {
       },
       error => { console.log(error)}
     )
+  }
+  formatLabel(value: number) {
+      return Math.round(value / 5) + ' dt';
+  }
+
+
+  filtrer() {
+    this.post.filtrer(this.filtre).subscribe((response:any) => {
+      this.houses = JSON.parse(response);
+    });
+  }
+  DeleteHouse(house: number) {
+    this.post.deleteHome({ "owner": this.userId }, house).subscribe(() => {
+      this.getHouses()
+      this.alertify.warning('House deleted !')
+    });
   }
 
 }

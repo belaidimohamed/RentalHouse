@@ -97,10 +97,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
         fav = [i['house_id'] for i in list(Favorits.objects.all().filter(
             user=user.id).values('house_id'))]
         print(fav)
-        favHouses = list(House.objects.all().filter(pk__in = fav).values())
+        favHouses = list(House.objects.all().filter(pk__in=fav).values())
         print(favHouses)
-        for house in favHouses :
-            house['images'] = list(Image.objects.all().filter(house=house['id']).values('image', 'default'))
+        for house in favHouses:
+            house['images'] = list(Image.objects.all().filter(
+                house=house['id']).values('image', 'default'))
 
         return JsonResponse(json.dumps(favHouses), safe=False)
 
@@ -117,7 +118,8 @@ class HouseViewSet(viewsets.ModelViewSet):
         owner = User.objects.get(id=house['owner_id'])
         print(request.data)
         user = User.objects.get(id=request.data['uid'])
-        favorit =  len(Favorits.objects.all().filter(user=user.id, house=house['id']).values()) != 0 # true if this house is favorit
+        favorit = len(Favorits.objects.all().filter(
+            user=user.id, house=house['id']).values()) != 0  # true if this house is favorit
 
         images = list(Image.objects.all().filter(
             house=house['id']).values('image', 'default'))
@@ -151,7 +153,7 @@ class HouseViewSet(viewsets.ModelViewSet):
         if request.method == "POST":
             size = request.data['type']
             description = request.data['description']
-            location = request.data['location']
+            location = request.data['location'].lower()
             price = request.data['price']
 
             b = House(owner=user, size=size, location=location, price=price, description=description, res_places="{}",
@@ -168,6 +170,13 @@ class HouseViewSet(viewsets.ModelViewSet):
                 img.save()
             return HttpResponse({'id': b.id}, status=201)
         return HttpResponse({'error': 'Failed to create house'}, status=400)
+
+    @action(detail=True, methods=['POST'])
+    def deleteHouse(self, request, pk=None):
+        # make sure the deleter is owner
+
+        House.objects.all().filter(id=pk).delete()
+        return HttpResponse(status=200)
 
 # ----------------------------- Comment stuff ------------------------------------------------------------------------------------
 
@@ -278,6 +287,66 @@ class HouseViewSet(viewsets.ModelViewSet):
 
         house.comments = json.dumps(comments)
         house.save()
+        return HttpResponse(status=200)
+
+# ----------------------------- Filtre stuff ------------------------------------------------------------------------------------
+    @action(detail=False, methods=['POST'])
+    def filtrer(self, request):
+        print(request.data)
+
+        if(request.data['location'] == None and request.data['type'] == 'Choose house type'):
+            houses = list(House.objects.filter(
+                price__gte=request.data['minValue'],
+                price__lte=request.data['maxValue'],
+            ).values())
+        elif(request.data['type'] == 'Choose house type'):
+            houses = list(House.objects.filter(
+                location=request.data['location'].lower(),
+                price__gte=request.data['minValue'],
+                price__lte=request.data['maxValue'],
+            ).values())
+        elif(request.data['location'] == None):
+            print('here')
+            houses = list(House.objects.filter(
+                size=request.data['type'],
+                price__gte=request.data['minValue'],
+                price__lte=request.data['maxValue'],
+            ).values())
+        else:
+            houses = list(House.objects.filter(
+                location=request.data['location'].lower(),
+                size=request.data['type'],
+                price__gte=request.data['minValue'],
+                price__lte=request.data['maxValue'],
+            ).values())
+
+        print(houses)
+
+        for i in range(len(houses)):
+            images = list(Image.objects.all().filter(
+                house=houses[i]['id']).values('image', 'default'))
+            houses[i]['images'] = images
+        data = json.dumps(houses)
+        return JsonResponse(data, safe=False)
+
+    @action(detail=True, methods=['Get'], permission_classes=[AllowAny])
+    def auto(self, request, pk=None):
+        user = User.objects.get(id=pk)
+        f = open('media/auto/houses.json',)
+
+        data = json.load(f)
+        for i in data:
+            print(i)
+            size = i['size']
+            description = i['description']
+            location = i['location'].lower()
+            price = i['price']
+
+            b = House(owner=user, size=size, location=location, price=price, description=description, res_places="{}",
+                      registered_p="{}", comments="[]")
+            b.save()
+            img = Image(house=b, image="auto/" + i['path'])
+            img.save()
         return HttpResponse(status=200)
 
 # "comments": "[

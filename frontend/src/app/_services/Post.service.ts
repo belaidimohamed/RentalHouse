@@ -47,4 +47,12 @@ export class PostService {
   removeFavorit(model:any , id:number) {
     return this.http.post(this.baseUrl + 'profile/' + id + '/removeFavorit/' , model , { headers: this.headers1 });
   }
+  filtrer(model:any) {
+    return this.http.post(this.baseUrl + 'house/filtrer/',model ,{headers: this.headers});
+  }
+  deleteHome(model: any, id: number) {
+    console.log(id)
+    return this.http.post(this.baseUrl + 'house/' + id + '/deleteHouse/' , model , { headers: this.headers1 });
+  }
+
 }
