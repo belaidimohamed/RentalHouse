@@ -40,6 +40,8 @@ import { ImageUploadModule } from 'angular2-image-upload';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { HouseResolver } from './_resolvers/house-resolver';
 import { MatSliderModule } from '@angular/material/slider';
+import { ReserveComponent } from './_forms/reserve/reserve.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -62,6 +64,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     SafePipe,
     ToollistPipe,
     CommentsComponent,
+    ReserveComponent,
+    NotificationsComponent,
    ],
   imports: [
     CommonModule,

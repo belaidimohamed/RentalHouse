@@ -28,4 +28,7 @@ export class GetService {
     getFavorits(id:number) {
       return this.http.get(this.baseUrl + 'profile/' + id + '/getFavorits/',{headers: this.headers})
     }
+    getNotif(id:number) {
+      return this.http.get(this.baseUrl + 'profile/' + id + '/getNotif/',{headers: this.headers})
+    }
 }

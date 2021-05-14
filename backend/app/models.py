@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
+from django.db.models.fields import CharField
+from rest_framework.fields import IntegerField
 
 
 class UserProfile(models.Model):
@@ -9,9 +11,10 @@ class UserProfile(models.Model):
     phone = models.CharField(null=True, max_length=20)
     email = models.EmailField(null=True, max_length=254)
     # locataire take , locateur give
-    role = models.CharField(default="locataire", max_length=10)
+    role = models.CharField(default="costumer", max_length=10)
     # false : male , True : female
     gender = models.CharField(null=True, max_length=10)
+    notifications = JSONField(null=True)
 
     def __str__(self):
         return self.user.username + " - " + self.role  # pylint: disable=no-member
@@ -23,21 +26,22 @@ class House(models.Model):
     location = models.CharField(null=True, max_length=50)
     price = models.FloatField(null=True)
     description = models.TextField(null=True)
-    res_places = JSONField(default=dict)
-    registered_p = models.JSONField(default=dict)
+    registration = JSONField(null=True)
     comments = JSONField(null=True)
+    max = models.IntegerField(null=True)
 
     def __str__(self):
         return str(self.owner) + " - " + self.location + " - " + str(self.price)  # pylint: disable=no-member
 
 
-class Favorits(models.Model):
+class Favorits(models.Model):  # favoris , accepted , reserved
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     house = models.ForeignKey(House, on_delete=models.CASCADE)
-    reserved = models.BooleanField(default=False)
+    nbplaces = models.IntegerField(null=True)
+    status = models.CharField(default="favorit", max_length=10)
 
     def __str__(self):
-        return str(self.user) + " - " + str(self.house) + " - " + str(self.reserved)  # pylint: disable=no-member
+        return str(self.user) + " - " + str(self.house) + " - " + str(self.status)  # pylint: disable=no-member
 
 
 class Image(models.Model):
@@ -47,3 +51,9 @@ class Image(models.Model):
 
     def __str__(self):
         return str(self.house) + " - "
+
+# regisration = {
+#     # 'status':"accepted" or pending maybe refused
+#     'demanders':[{'id','name','nbplaces'}],
+#     'accepted':[{'id','name','nbplaces'}]
+# }

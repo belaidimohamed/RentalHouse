@@ -51,8 +51,18 @@ export class PostService {
     return this.http.post(this.baseUrl + 'house/filtrer/',model ,{headers: this.headers});
   }
   deleteHome(model: any, id: number) {
-    console.log(id)
     return this.http.post(this.baseUrl + 'house/' + id + '/deleteHouse/' , model , { headers: this.headers1 });
   }
-
+  reserve(model: any, id: number) {
+    return this.http.post(this.baseUrl + 'profile/' + id + '/reserveHouse/' , model , { headers: this.headers1 });
+  }
+  cancelReserve(model:any , id:number) {
+    return this.http.post(this.baseUrl + 'profile/' + id + '/cancelReserve/' , model , { headers: this.headers1 });
+  }
+  Vu(model:any , id:number) {
+    return this.http.post(this.baseUrl + 'profile/' + id + '/Vu/' , model , { headers: this.headers1 });
+  }
+  getSpecificHouses(model:any) {
+    return this.http.post(this.baseUrl + 'house/getSpecificHouses/' , model , { headers: this.headers1 });
+  }
 }

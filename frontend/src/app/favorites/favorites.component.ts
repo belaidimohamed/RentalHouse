@@ -8,7 +8,8 @@ import { GlobalConstants } from '../global-constant';
   styleUrls: ['./favorites.component.scss']
 })
 export class FavoritesComponent implements OnInit {
-  favorits : any ;
+  houses: any;
+  index=0
   baseUrl = GlobalConstants.apiURL ;
 
   constructor(private Get: GetService ) { }
@@ -19,8 +20,7 @@ export class FavoritesComponent implements OnInit {
   getFavorits() {
     this.Get.getFavorits(parseInt(localStorage.getItem('id'))).subscribe(
       (data:any) => {
-        this.favorits = JSON.parse(data);
-        console.log(this.favorits)
+        this.houses = JSON.parse(data);
       },
       error => { console.log(error)}
     )

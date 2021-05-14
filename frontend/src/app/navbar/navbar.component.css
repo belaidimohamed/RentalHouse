@@ -1,0 +1,12 @@
+.notif {
+  display: inline;
+  border-radius: 40%;
+  padding: 3px;
+  padding-right: 5px;
+  background: red;
+  border: 1px solid #666;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+
+}

@@ -1,0 +1,13 @@
+<form (ngSubmit)="save()">
+  <h2 class="text-center text-primary">Reserve places </h2>
+  <hr>
+
+  <div class="form-group">
+    <input type="number" class="form-control" required name="number" [(ngModel)]="model.nbplaces" placeholder="Number of places">
+  </div>
+
+  <div class="form-group text-center">
+    <button class="btn btn-success" type="submit">Save</button>
+    <button style="margin:10px;" class="btn btn-danger" type="button" (click)="cancelRegister()">Cancel</button>
+  </div>
+</form>

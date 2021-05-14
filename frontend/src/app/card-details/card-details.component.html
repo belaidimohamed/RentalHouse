@@ -16,7 +16,7 @@
               <p><strong>Price : </strong>  &nbsp; {{this.house.price}} &nbsp; dt </p>
               <p><strong>Description : </strong> {{this.house.description}}
               </p>
-              <p><strong>Reserved places : </strong>  &nbsp; 1/2  </p>
+              <p><strong>Reserved places : </strong>  &nbsp; {{this.house.accepted}}/{{this.house.max}}  </p>
               <br>
             </div>
             </tab>
@@ -46,14 +46,17 @@
           </tabset>
         </div>
         <div *ngIf="favbuttons" class="row mt-3 mb-4">
-          <div class="col-6">
-            <button type="button" class="btn btn-success  btn-md btn-block">Reserve place &nbsp; <i class="fa fa-calendar-check-o" aria-hidden="true"></i></button>
+           <div class="col-12" *ngIf="this.house.favorit == 'pending'">
+            <button type="button" class="btn btn-danger  btn-md btn-block" (click) = "cancelR()"> Cancel Reservation  &nbsp; <i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+          </div>
+          <div class="col-6" *ngIf="this.house.favorit != 'pending'" >
+            <button type="button" class="btn btn-success  btn-md btn-block" (click)="reserve()">Reserve place &nbsp; <i class="fa fa-calendar-check-o" aria-hidden="true"></i></button>
           </div>
 
           <div class="col-6" *ngIf="!this.house.favorit">
             <button type="button" class="btn btn-secondary  btn-md btn-block" (click) = "addToFavorits()">Add to favorits  &nbsp; <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
           </div>
-          <div class="col-6" *ngIf="this.house.favorit">
+          <div class="col-6" *ngIf="this.house.favorit == 'favorit' ">
             <button type="button" class="btn btn-warning  btn-md btn-block" (click) = "removeFavorit()">Remove from favorits  &nbsp; <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
           </div>
 

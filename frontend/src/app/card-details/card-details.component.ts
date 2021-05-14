@@ -1,3 +1,5 @@
+import { ReserveComponent } from './../_forms/reserve/reserve.component';
+import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { PostService } from 'src/app/_services/Post.service';
 import { Component, OnInit } from '@angular/core';
@@ -27,6 +29,7 @@ export class CardDetailsComponent implements OnInit {
   mapsURL = `https://maps.google.com/maps?q=${this.positionMap.Coordinates}&t=&z=20&ie=UTF8&iwloc=&output=embed`;
 
   constructor(
+    private dialog : MatDialog,
     private alertify: AlertifyService,
     private post : PostService,
     private get : GetService ,
@@ -81,9 +84,9 @@ export class CardDetailsComponent implements OnInit {
     this.post.addToFavorits( this.house.id ,parseInt(localStorage.getItem('id')) ).subscribe(
       () => {
         this.alertify.success('House added to favorits succefully !'),
-        this.house.favorit = true ;
+        this.house.favorit = 'favorit' ;
       },
-      error => this.alertify.warning('You already added this house to favorits')
+      error => this.alertify.warning('You already reserved or added this house to favorits')
     )
   }
   removeFavorit() {
@@ -93,6 +96,31 @@ export class CardDetailsComponent implements OnInit {
         this.house.favorit = false;
       },
       error => this.alertify.warning('You already removed this house from favorits')
+    )
+  }
+  reserve() {
+     this.dialog.open(ReserveComponent, {
+      disableClose: false,
+      autoFocus : true,
+      width: "40%",
+      data:  {'hid': this.house.id,'dispo': parseInt(this.house.max) - parseInt(this.house.accepted) },
+    }).afterClosed().subscribe( (res) => {
+      if (res.data != true && res.data != false)
+        this.alertify.error(res.data)
+      if (res.data == true) {
+        this.alertify.success('Reservation completed')
+        this.house.favorit = 'pending';
+      }
+
+    });;
+  }
+  cancelR() {
+    this.post.cancelReserve({ 'hid': this.house.id },  parseInt(localStorage.getItem('id'))).subscribe(
+      () => {
+        this.alertify.message('Registration has been canceled');
+        this.house.favorit = false ;
+      },
+      error => {this.alertify.error(error)}
     )
   }
 }
