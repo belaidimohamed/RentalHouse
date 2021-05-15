@@ -57,7 +57,10 @@ export class AcceuilComponent implements OnInit {
       return Math.round(value / 5) + ' dt';
   }
 
-
+  reset() {
+    this.filtre = { 'location': null, 'type': 'Choose house type', 'minValue': 0, 'maxValue': 1000 };
+    this.getHouses()
+  }
   filtrer() {
     this.post.filtrer(this.filtre).subscribe((response:any) => {
       this.houses = JSON.parse(response);
