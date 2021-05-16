@@ -258,7 +258,7 @@ class HouseViewSet(viewsets.ModelViewSet):
         return JsonResponse(data, safe=False)
 
     @action(detail=False, methods=['GET'])
-    def getHouses(self):
+    def getHouses(self,request):
         houses = list(House.objects.all().values())
 
         for i in range(len(houses)):
