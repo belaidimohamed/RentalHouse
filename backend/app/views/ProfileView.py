@@ -156,6 +156,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
             try:
                 if i['uid'] == pk and i['hid'] == hid:
                     notif['reservations'].remove(i)
+                    if len(notif['reservations']) < notif['number']:
+                        notif['number'] -= 1 
                     profile.notifications = json.dumps(notif)
                     profile.save()
                     break
