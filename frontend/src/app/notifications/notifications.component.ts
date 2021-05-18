@@ -17,7 +17,6 @@ export class NotificationsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.baseUrl)
     this.notifService.currentMessage.subscribe(message => {
       this.data = message;
       this.post.getSpecificHouses(this.data.reservations).subscribe(
