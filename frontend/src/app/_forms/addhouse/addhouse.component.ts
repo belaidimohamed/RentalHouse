@@ -1,8 +1,5 @@
 import { PostService } from './../../_services/Post.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 import { FileHolder } from 'angular2-image-upload';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { Router } from '@angular/router';

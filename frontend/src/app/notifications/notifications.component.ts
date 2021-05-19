@@ -10,6 +10,7 @@ import { GlobalConstants } from '../global-constant';
 })
 export class NotificationsComponent implements OnInit {
   data :any;
+  requests: any;
   baseUrl = GlobalConstants.apiURL ;
   constructor(
     private post : PostService,
@@ -21,7 +22,8 @@ export class NotificationsComponent implements OnInit {
       this.data = message;
       this.post.getSpecificHouses(this.data.reservations).subscribe(
         (ticket: any) => {
-          console.log(ticket)
+          console.log(ticket);
+          this.requests = JSON.parse(ticket);
         })
     });
   }

@@ -49,6 +49,14 @@
 
   <br>
 
+  <label for="inlineFormInputGroupUsername"> <span class="labell">Number of places</span></label>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">places</div>
+    </div>
+    <input type="number" class="form-control" id="inlineFormInputGroupUsername" placeholder="Number of places "  [(ngModel)] = "model.max">
+  </div>
+  <br>
 
   <image-upload url="http://mockbin.org/request"  [style]="customStyle" (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)" ></image-upload>
   <br>

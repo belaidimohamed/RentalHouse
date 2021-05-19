@@ -215,3 +215,51 @@ class ProfileViewSet(viewsets.ModelViewSet):
             notif['new'] = 0
         print(notif)
         return JsonResponse(json.dumps(notif), safe=False)
+
+    @action(detail=True, methods=['POST'])
+    def acceptReserve(self, request, pk=None):
+        hid = request.data['hid'] # house id
+        cid = request.data['uid'] # demander id
+        customer = User.objects.get(id=request.data['uid'])
+        house = House.objects.get(id=hid)
+
+        # change status of favorits of customer to accepted
+        if len(Favorits.objects.all().filter(user=cid, house=hid, status='pending').values()) != 0:
+            f = Favorits.objects.get(user=cid, house=hid)
+            f.status = 'accepted'
+        else:
+            return HttpResponse(status=400)
+        f.save()
+
+        # add the user to accepted instead of demanders (ofc delete it from demanders too)
+        h = json.loads(house.registration)
+        h['accepted'].append({
+            'id': pk,
+            'name': customer.username,
+            'nbplaces': request.data['nbplaces'],
+        })
+        for i in h['demanders']:
+            if i['id'] == pk:
+                h['demanders'].remove(i)
+                break
+        house.registration = json.dumps(h)
+        house.save()
+
+        # remove the reserve request from notification of owner
+        profile = UserProfile.objects.get(user=pk)
+
+        notif = json.loads(profile.notifications)
+        # [0, {'uid': '2', 'hid': 13}, {'uid': '2','hid': 15}, {'uid': '2', 'hid': 19}]
+        for i in notif['reservations']:
+            try:
+                if i['uid'] == cid and i['hid'] == hid:
+                    notif['reservations'].remove(i)
+                    if len(notif['reservations']) < notif['number']:
+                        notif['number'] -= 1 
+                    profile.notifications = json.dumps(notif)
+                    profile.save()
+                    break
+            except:
+                pass
+        return HttpResponse(status=200)
+# {"demanders":[],"accepted":[]}

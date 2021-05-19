@@ -67,10 +67,12 @@ class HouseViewSet(viewsets.ModelViewSet):
     def getSpecificHouses(self, request):
         data = []
         for i in request.data :
+            image = Image.objects.all().filter(house = i['hid']).values('image')[0]
             i.update({
                 'house': House.objects.all().filter(id=i['hid']).values('size','price','location')[0],
                 'demander' : User.objects.all().filter(id=i['uid']).values('username')[0]['username'] ,
-                'nbplaces' : Favorits.objects.all().filter(user=i['uid'],house = i['hid']).values('nbplaces')[0]['nbplaces']
+                'nbplaces' : Favorits.objects.all().filter(user=i['uid'],house = i['hid']).values('nbplaces')[0]['nbplaces'],
+                'image': image
             })
             data.append(i)
 
@@ -86,9 +88,9 @@ class HouseViewSet(viewsets.ModelViewSet):
             description = request.data['description']
             location = request.data['location'].lower()
             price = request.data['price']
-
-            b = House(owner=user, size=size, location=location, price=price, description=description,
-                      regisration='{"demanders":[],"accepted":[]}', comments="[]")
+            max = request.data['max']
+            b = House(owner=user, size=size, location=location, price=price, description=description,max = max,
+                      registration='{"demanders":[],"accepted":[]}', comments="[]")
             b.save()
             for i in request.data['images']:
 
