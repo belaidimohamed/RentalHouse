@@ -1,8 +1,7 @@
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
-from django.db.models.fields import CharField
-from rest_framework.fields import IntegerField
 
 
 class UserProfile(models.Model):
@@ -29,6 +28,8 @@ class House(models.Model):
     registration = JSONField(null=True)
     comments = JSONField(null=True)
     max = models.IntegerField(null=True)
+    date_of_post = models.DateTimeField(null=True)
+    coordinates = models.CharField(null=True, max_length=100)
 
     def __str__(self):
         return str(self.owner) + " - " + self.location + " - " + str(self.price)  # pylint: disable=no-member

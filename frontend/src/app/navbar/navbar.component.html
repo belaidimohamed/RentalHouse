@@ -8,17 +8,20 @@
             <li class="nav-item active">
               <a class="nav-link"  [routerLink]="['/acceuil']"> Acceuil</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="auth.loggedIn()" class="nav-item">
               <a class="nav-link" [routerLink]="['/favorits']" > Favorits</a>
             </li>
-             <li class="nav-item">
+             <li *ngIf="auth.loggedIn()" class="nav-item">
               <a class="nav-link" [routerLink]="['/notifcations']" (click)="Vu()" >
                  Notifications <div *ngIf="notif['new']>0" class="notif">{{notif['new']}}</div>
               </a>
             </li>
+            <li *ngIf="auth.isOwner()" class="nav-item">
+              <a class="nav-link" [routerLink]="['/customer']" > Customer</a>
+            </li>
 
           </ul>
-          <div *ngIf="loggedIn()" class="dropdown">
+          <div *ngIf="auth.loggedIn()" class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" style="background-color:rgba(37, 37, 37, 0.13)" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="fa fa-user" aria-hidden="true" ></span>&nbsp; Welcome {{ this.auth.username| titlecase }}
             </button>
@@ -28,7 +31,7 @@
             </div>
           </div>
 
-          <form class="form-inline mt-2 mt-md-0" *ngIf="!loggedIn()">
+          <form class="form-inline mt-2 mt-md-0" *ngIf="!auth.loggedIn()">
             <button class="btn btn-outline-success my-2 my-sm-0" (click)="openRegister(1)">sign in</button>&nbsp;&nbsp;
             <button class="btn btn-outline-info my-2 my-sm-0" (click)="openRegister(2)">sign up</button>
           </form>

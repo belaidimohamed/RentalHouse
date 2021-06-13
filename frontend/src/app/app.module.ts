@@ -42,6 +42,7 @@ import { HouseResolver } from './_resolvers/house-resolver';
 import { MatSliderModule } from '@angular/material/slider';
 import { ReserveComponent } from './_forms/reserve/reserve.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { CustomerComponent } from './customer/customer.component';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -52,7 +53,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
 }
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     NavbarComponent,
     RegisterComponent,
@@ -66,6 +67,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     CommentsComponent,
     ReserveComponent,
     NotificationsComponent,
+      CustomerComponent
    ],
   imports: [
     CommonModule,

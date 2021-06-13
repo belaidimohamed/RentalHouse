@@ -22,10 +22,13 @@ class CustomAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+        role = UserProfile.objects.all().filter(user=user).values('role')[0]
+        print(role)
         return Response({
             'token': token.key,
             'user_id': user.id,
-            'name': user.username
+            'name': user.username,
+            'role':role['role'],
         })
 
 
@@ -250,6 +253,45 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
         notif = json.loads(profile.notifications)
         # [0, {'uid': '2', 'hid': 13}, {'uid': '2','hid': 15}, {'uid': '2', 'hid': 19}]
+        for i in notif['reservations']:
+            try:
+                if i['uid'] == cid and i['hid'] == hid:
+                    notif['reservations'].remove(i)
+                    if len(notif['reservations']) < notif['number']:
+                        notif['number'] -= 1 
+                    profile.notifications = json.dumps(notif)
+                    profile.save()
+                    break
+            except:
+                pass
+        return HttpResponse(status=200)
+    @action(detail=True, methods=['POST'])
+    def declineReserve(self, request, pk=None):
+        hid = request.data['hid'] # house id
+        cid = request.data['uid'] # demander id
+        customer = User.objects.get(id=request.data['uid'])
+        house = House.objects.get(id=hid)
+
+        # change status of favorits of customer to accepted
+        if len(Favorits.objects.all().filter(user=cid, house=hid, status='pending').values()) != 0:
+            f = Favorits.objects.get(user=cid, house=hid)
+            f.status = 'refused'
+        else:
+            return HttpResponse(status=400)
+        f.save()
+
+        #  delete customer from demanders 
+        h = json.loads(house.registration)
+        for i in h['demanders']:
+            if i['id'] == pk:
+                h['demanders'].remove(i)
+                break
+        house.registration = json.dumps(h)
+        house.save()
+
+        # remove the reserve request from notification of owner
+        profile = UserProfile.objects.get(user=pk)
+        notif = json.loads(profile.notifications)
         for i in notif['reservations']:
             try:
                 if i['uid'] == cid and i['hid'] == hid:

@@ -1,3 +1,4 @@
+import { AuthService } from './../_services/auth.service';
 import { ReserveComponent } from './../_forms/reserve/reserve.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertifyService } from 'src/app/_services/alertify.service';
@@ -20,24 +21,28 @@ export class CardDetailsComponent implements OnInit {
   coord = '';
   profile: any ;
   house: any ;
-
+  id: number;
+  positionMap = { Coordinates : "Tunisia" };
   baseUrl = GlobalConstants.apiURL ;
 
-  positionMap = {
-    Coordinates : "36.775611, 8.669139",
-  };
-  mapsURL = `https://maps.google.com/maps?q=${this.positionMap.Coordinates}&t=&z=20&ie=UTF8&iwloc=&output=embed`;
+
+  mapsURL = ``
 
   constructor(
     private dialog : MatDialog,
     private alertify: AlertifyService,
     private post : PostService,
-    private get : GetService ,
+    public auth : AuthService ,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.id = parseInt(localStorage.getItem('id'))
     this.route.params.subscribe(params => {
       this.house = this.route.snapshot.data.house ;
+
+      this.positionMap.Coordinates = this.house.coordinates
+      this.mapsURL = `https://maps.google.com/maps?q=${this.positionMap.Coordinates}&t=&z=20&ie=UTF8&iwloc=&output=embed`;
+
       this.makeGallery(this.house.images);
     });
 
@@ -119,6 +124,16 @@ export class CardDetailsComponent implements OnInit {
       () => {
         this.alertify.message('Registration has been canceled');
         this.house.favorit = false ;
+      },
+      error => {this.alertify.error(error)}
+    )
+  }
+  save() {
+    this.post.changeCoordinate({'coord':this.coord}, this.house.id).subscribe(
+      () => {
+        this.alertify.message('Changed succefuly ');
+        this.mapsURL = `https://maps.google.com/maps?q=${this.coord}&t=&z=20&ie=UTF8&iwloc=&output=embed`;
+
       },
       error => {this.alertify.error(error)}
     )

@@ -25,7 +25,8 @@
                 <p><strong>Email : </strong> &nbsp; {{house.email}}  </p>
               <p><strong>Phone : </strong>  &nbsp; {{house.phone}} </p> <br>
 
-              <p><i style='color:grey; float:right'>Posted by :  {{house.owner_name}} </i>  </p>
+              <p><i style='color:grey; float:right'>Posted by :  {{house.owner_name}} - {{house.date_of_post}} ago </i>  </p>
+
               </div>
             </tab>
             <tab (selectTab)="favbuttons = false" heading="location">
@@ -38,14 +39,16 @@
                 </iframe>
                 <div class="mt-4 mb-4">
                   <strong >Change location coordinates :</strong>
-                  <input class="ml-2" type="text">
+                  <input class="ml-2" type="text"  [(ngModel)] = "coord">
+                  <button type="button" class="btn btn-success btn-sm ml-2" (click)="save()" > Save</button>
                 </div>
 
               </div>
             </tab>
           </tabset>
         </div>
-        <div *ngIf="favbuttons" class="row mt-3 mb-4">
+        <!-- house.owner_id != id  &&  -->
+        <div *ngIf="house.owner_id != id && auth.loggedIn()" class="row mt-3 mb-4">
            <div class="col-12" *ngIf="this.house.favorit == 'pending'">
             <button type="button" class="btn btn-danger  btn-md btn-block" (click) = "cancelR()"> Cancel Reservation  &nbsp; <i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
           </div>

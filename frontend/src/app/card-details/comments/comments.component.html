@@ -2,7 +2,7 @@
   <div style="margin: 20px">
     <!-- ---------------- sending a comment ---------------------------------- -->
 
-    <textarea type="text" placeholder=" Add a comment here .. " class="commentadd" (focus)="FocusComment()"
+    <textarea *ngIf="auth.loggedIn()" type="text" placeholder=" Add a comment here .. " class="commentadd" (focus)="FocusComment()"
       (focusout)="FocusComment()" [(ngModel)]="comment"></textarea><br />
     <div *ngIf="onFocusComment" class="commentbtn" [ngStyle]="{ 'margin-left': buttonCommentMargin + '%' }">
       <button class="btn btn-secondary" (mousedown)="cancelComment()">

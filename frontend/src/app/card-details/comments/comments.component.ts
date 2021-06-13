@@ -1,3 +1,4 @@
+import { AuthService } from './../../_services/auth.service';
 import { ActivatedRoute , Router } from '@angular/router';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { GetService } from './../../_services/Get.service';
@@ -33,7 +34,9 @@ import { Component, OnInit } from '@angular/core';
     tab: any = {};
     buttonReplyMargin = 40 ;
 
-    constructor(private route: ActivatedRoute, private apiPost: PostService, private router: Router,
+    constructor(
+      private route: ActivatedRoute, private apiPost: PostService,
+      private router: Router, public auth : AuthService,
       private apiGet: GetService, private alertify: AlertifyService) { }
     ngOnInit() {
       this.userId = parseInt(localStorage.getItem('id'));

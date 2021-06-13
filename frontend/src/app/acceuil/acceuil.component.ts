@@ -1,3 +1,4 @@
+import { AuthService } from './../_services/auth.service';
 import { AlertifyService } from './../_services/alertify.service';
 import { PostService } from 'src/app/_services/Post.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +14,7 @@ import { Options, LabelType } from '@angular-slider/ngx-slider';
 })
 
 export class AcceuilComponent implements OnInit {
+
   houses: any;
   hover: false;
   userId: number;
@@ -39,7 +41,8 @@ export class AcceuilComponent implements OnInit {
   constructor(
       private Get: GetService,
       private alertify : AlertifyService,
-      private post: PostService) { }
+      private post: PostService,
+      public auth: AuthService) { }
 
   ngOnInit() {
     this.userId = parseInt(localStorage.getItem('id'));

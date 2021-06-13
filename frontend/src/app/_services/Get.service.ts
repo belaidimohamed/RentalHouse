@@ -31,4 +31,7 @@ export class GetService {
     getNotif(id:number) {
       return this.http.get(this.baseUrl + 'profile/' + id + '/getNotif/',{headers: this.headers})
     }
+    getAccepted(id:number) {
+      return this.http.get(this.baseUrl + 'house/' + id + '/getAccepted/',{headers: this.headers})
+    }
 }

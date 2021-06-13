@@ -2,6 +2,7 @@ import json
 from ..serializers import *
 from ..models import *
 from ..permissions import IsOwner
+from ..utils import time
 
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
@@ -10,7 +11,6 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action
-
 import base64
 
 from django.core.files.base import ContentFile
@@ -19,30 +19,35 @@ from django.core.files.base import ContentFile
 class HouseViewSet(viewsets.ModelViewSet):
     queryset = House.objects.all()
     serializer_class = HouseSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (AllowAny,)
+    authentication_classes = []
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (AllowAny,)
 
     @action(detail=True, methods=['POST'])
     def getHouse(self, request, pk=None):
         house = House.objects.all().filter(id=pk).values()[0]
         owner = User.objects.get(id=house['owner_id'])
         print(request.data)
-        user = User.objects.get(id=request.data['uid'])
-        if (len(Favorits.objects.all().filter(user=user.id, house=house['id'], status='favorit').values()) != 0):
-            favorit = 'favorit'  # true if this house is favorit
-        elif (len(Favorits.objects.all().filter(user=user.id, house=house['id'], status='pending').values()) != 0):
-            favorit = 'pending'
-        else:
-            favorit = False
-        images = list(Image.objects.all().filter(
-            house=house['id']).values('image', 'default'))
-        profile = UserProfile.objects.get(user=house['owner_id'])
+        favorit = None
+        if request.data['who'] == 'client':
+            user = User.objects.get(id=request.data['uid'])
+            if (len(Favorits.objects.all().filter(user=user.id, house=house['id'], status='favorit').values()) != 0):
+                favorit = 'favorit'  # true if this house is favorit
+            elif (len(Favorits.objects.all().filter(user=user.id, house=house['id'], status='pending').values()) != 0):
+                favorit = 'pending'
+            else:
+                favorit = False
+            
         accepte = 0
         for i in json.loads(house['registration'])['accepted']:
             accepte += i['nbplaces']
-
+        profile = UserProfile.objects.get(user=house['owner_id'])
+        images = list(Image.objects.all().filter(
+                house=house['id']).values('image', 'default'))
         house['images'] = images
         house['accepted'] = accepte
+        house['date_of_post'] = time.duration(house['date_of_post'])
+
         house.update({
             'owner_name':  owner.username,
             'email': profile.email,
@@ -55,11 +60,13 @@ class HouseViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['GET'])
     def getHouses(self, request):
         houses = list(House.objects.all().values())
-
         for i in range(len(houses)):
             images = list(Image.objects.all().filter(
                 house=houses[i]['id']).values('image', 'default'))
             houses[i]['images'] = images
+            # we can put that in function later in utils
+            houses[i]['date_of_post'] = time.duration(houses[i]['date_of_post'])
+
         data = json.dumps(houses)
         return JsonResponse(data, safe=False)
 
@@ -84,13 +91,24 @@ class HouseViewSet(viewsets.ModelViewSet):
         user = User.objects.get(id=pk)
         self.check_object_permissions(request, user)
         if request.method == "POST":
-            size = request.data['type']
-            description = request.data['description']
-            location = request.data['location'].lower()
-            price = request.data['price']
+      
             max = request.data['max']
-            b = House(owner=user, size=size, location=location, price=price, description=description,max = max,
-                      registration='{"demanders":[],"accepted":[]}', comments="[]")
+            now = datetime.now()
+            if request.data['coordinates']:
+                coordinates = request.data['coordinates']
+            else :
+                coordinates = request.data['location'].lower()
+            b = House(
+                owner=user, 
+                size= request.data['type'], 
+                location= request.data['location'].lower(), 
+                price= request.data['price'], 
+                description= request.data['description'],
+                max = max, 
+                date_of_post = now ,
+                coordinates = coordinates,
+                registration='{"demanders":[],"accepted":[]}', comments="[]"
+            )
             b.save()
             for i in request.data['images']:
 
@@ -111,6 +129,30 @@ class HouseViewSet(viewsets.ModelViewSet):
         House.objects.all().filter(id=pk).delete()
         return HttpResponse(status=200)
 
+    @action(detail=True, methods=['Get'])
+    def getAccepted(self, request, pk=None):
+        reservations = House.objects.all().filter(owner=pk).values('registration')
+        # {'registration': '{"demanders": [], "accepted": [{"id": "2", "name": "mohamed", "nbplaces": 1}]}'}
+        data = []
+        for i in reservations :
+            accepted = json.loads(i['registration'])
+            for j in accepted['accepted']:
+                profile = UserProfile.objects.all().filter(user=j['id']).values('gender','adress','email','phone')[0]
+                j.update(profile)
+                data.append(j) 
+        print(data)
+        return JsonResponse(json.dumps(data), safe=False)
+
+    @action(detail=True, methods=['POST'])
+    def changeCoordinate(self, request, pk=None):
+        # make sure the deleter is owner
+        print('tt')
+        print(request.data['coord'])
+        house = House.objects.get(id=pk)
+        house.coordinates = request.data['coord']
+        house.save()
+        return HttpResponse(status=200)
+       
 # ----------------------------- Comment stuff ------------------------------------------------------------------------------------
 
     @action(detail=True, methods=['GET'])
@@ -263,6 +305,7 @@ class HouseViewSet(viewsets.ModelViewSet):
         data = json.dumps(houses)
         return JsonResponse(data, safe=False)
 
+
     @action(detail=True, methods=['Get'], permission_classes=[AllowAny])
     def auto(self, request, pk=None):
         user = User.objects.get(id=pk)
@@ -276,7 +319,12 @@ class HouseViewSet(viewsets.ModelViewSet):
             location = i['location'].lower()
             price = i['price']
             max = i['max']
-            b = House(owner=user, size=size, location=location, price=price, max=max,
+            now = datetime.now()
+            try:
+                coordinates = i['coordinates']
+            except :
+                coordinates = i['location'].lower()
+            b = House(owner=user, size=size, location=location, price=price, max=max,coordinates= coordinates , date_of_post = now,
                       description=description, registration='{"demanders":[],"accepted":[]}', comments="[]")
             b.save()
             img = Image(house=b, image="auto/" + i['path'])

@@ -65,4 +65,13 @@ export class PostService {
   getSpecificHouses(model:any) {
     return this.http.post(this.baseUrl + 'house/getSpecificHouses/' , model , { headers: this.headers1 });
   }
+  accept(model:any,id:number) {
+    return this.http.post(this.baseUrl + 'profile/' + id + '/acceptReserve/' , model , { headers: this.headers1 });
+  }
+  decline(model:any,id:number) {
+    return this.http.post(this.baseUrl + 'profile/' + id + '/declineReserve/' , model , { headers: this.headers1 });
+  }
+  changeCoordinate(model:any,id:number) {
+    return this.http.post(this.baseUrl + 'house/' + id + '/changeCoordinate/' , model , { headers: this.headers1 });
+  }
 }

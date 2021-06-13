@@ -51,7 +51,7 @@
     </div>
 
     <div class="row">
-      <div class="card mb-4 col-md-3 box-shadow cardBox" >
+      <div *ngIf="auth.isOwner()" class="card mb-4 col-md-3 box-shadow cardBox" >
         <span class="plus">  <i class="fa fa-plus fa-5x" aria-hidden="true"></i> </span>
           <div class="btn-group mt-3 mb-4">
               <a type="button" class="btn btn-sm btn-outline-success center" [routerLink]="['/addhouse']" >Add a new house</a>
@@ -76,7 +76,7 @@
               <div class="btn-group">
                 <a type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="['/details', house.id]">Details</a>
               </div>
-              <small class="text-muted">9 mins</small>
+              <small class="text-muted">{{house.date_of_post}}</small>
             </div>
           </div>
         </div>

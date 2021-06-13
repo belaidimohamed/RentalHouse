@@ -42,6 +42,14 @@ export class AuthService {
       return true;
     }
   }
+  isOwner() {
+    const role = localStorage.getItem('role');
+    if (role == 'owner') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
 }

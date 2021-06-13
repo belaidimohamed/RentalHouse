@@ -21,26 +21,25 @@ export class NavbarComponent implements OnInit {
     private post : PostService,
     private get: GetService,
     private dialog: MatDialog,
-    private auth : AuthService,
+    public auth : AuthService,
     private alertify: AlertifyService ,
     private router: Router ,
     private notifService : NotifService
   ) { }
 
   ngOnInit(): void {
-    this.name = localStorage.getItem('name');
-    this.get.getNotif(parseInt(localStorage.getItem('id'))).subscribe(
-      (result:any) => {
-        this.notif = JSON.parse(result)
-        this.notifService.changeData(this.notif)
-      },
-      error => {
-        console.log(error)
-      }
-    )
-  }
-  loggedIn(){
-    return this.auth.loggedIn();
+    if (this.auth.loggedIn()){
+      this.name = localStorage.getItem('name');
+      this.get.getNotif(parseInt(localStorage.getItem('id'))).subscribe(
+        (result:any) => {
+          this.notif = JSON.parse(result)
+          this.notifService.changeData(this.notif)
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
   }
   openEditProfileForm() {
     console.log('h');
