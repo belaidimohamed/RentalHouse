@@ -3,7 +3,7 @@ def duration(time) :
     now = datetime.now()
     duration = now - time.replace(tzinfo=None)
     if duration.seconds < 60 :
-        return duration.seconds +' seconds'
+        return str(duration.seconds) +' seconds'
     elif duration.seconds < 3600 :
         return str(divmod(duration.seconds, 60)[0]) + ' minutes'
     elif duration.seconds < 86400 :
