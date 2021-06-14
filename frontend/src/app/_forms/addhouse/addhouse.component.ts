@@ -47,7 +47,32 @@ export class AddhouseComponent implements OnInit {
     }
   }
   keyword = 'name';
-  states = ['Tunisia','Algeria','Manouba'];
+  states = [
+    ,'benzert'
+    ,'jendouba'
+    ,'tunis'
+    ,'sfax'
+    ,'ariana'
+    ,'beja'
+    ,'benarous'
+    ,'gabes'
+    ,'gafsa'
+    ,'kairouan'
+    ,'gasrin'
+    ,'gbeli'
+
+    ,'kef'
+    ,'mehdia'
+    ,'manouba'
+    ,'mednin'
+    ,'nabeul'
+    ,'sidi bouzid'
+    ,'siliana'
+    ,'sousse'
+    ,'tataouine'
+    ,'tozeur'
+    ,'zaghwan'
+   ];
 
 
   constructor(

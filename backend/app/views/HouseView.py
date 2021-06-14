@@ -94,9 +94,9 @@ class HouseViewSet(viewsets.ModelViewSet):
       
             max = request.data['max']
             now = datetime.now()
-            if request.data['coordinates']:
+            try:
                 coordinates = request.data['coordinates']
-            else :
+            except :
                 coordinates = request.data['location'].lower()
             b = House(
                 owner=user, 

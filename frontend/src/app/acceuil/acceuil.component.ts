@@ -22,31 +22,32 @@ export class AcceuilComponent implements OnInit {
   baseUrl = GlobalConstants.apiURL ;
   keyword = 'Cite';
   states = [
-    {'Cite':'benzert'},
-    {'Cite':'jendouba'},
-    {'Cite':'tunis'},
-    {'Cite':'sfax'},
-    {'Cite':'ariana'},
-    {'Cite':'beja'},
-    {'Cite':'benarous'},
-    {'Cite':'gabes'},
-    {'Cite':'gafsa'},
-    {'Cite':'kairouan'},
-    {'Cite':'gasrin'},
-    {'Cite':'gbeli'},
+    ,'benzert'
+    ,'jendouba'
+    ,'tunis'
+    ,'sfax'
+    ,'ariana'
+    ,'beja'
+    ,'benarous'
+    ,'gabes'
+    ,'gafsa'
+    ,'kairouan'
+    ,'gasrin'
+    ,'gbeli'
 
-    {'Cite':'kef'},
-    {'Cite':'mehdia'},
-    {'Cite':'manouba'},
-    {'Cite':'mednin'},
-    {'Cite':'nabeul'},
-    {'Cite':'sidi bouzid'},
-    {'Cite':'siliana'},
-    {'Cite':'sousse'},
-    {'Cite':'tataouine'},
-    {'Cite':'tozeur'},
-    {'Cite':'zaghwan'},
+    ,'kef'
+    ,'mehdia'
+    ,'manouba'
+    ,'mednin'
+    ,'nabeul'
+    ,'sidi bouzid'
+    ,'siliana'
+    ,'sousse'
+    ,'tataouine'
+    ,'tozeur'
+    ,'zaghwan'
    ];
+
 
   filtre: any = {'location':null,'type':'Choose house type','minValue':0,'maxValue':1000};
   options: Options = {
