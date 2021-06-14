@@ -302,6 +302,7 @@ class HouseViewSet(viewsets.ModelViewSet):
             images = list(Image.objects.all().filter(
                 house=houses[i]['id']).values('image', 'default'))
             houses[i]['images'] = images
+            houses[i]['date_of_post'] = time.duration(houses[i]['date_of_post'])
         data = json.dumps(houses)
         return JsonResponse(data, safe=False)
 
