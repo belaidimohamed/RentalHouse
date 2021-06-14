@@ -71,7 +71,6 @@ export class AcceuilComponent implements OnInit {
       public auth: AuthService) { }
 
   ngOnInit() {
-    console.log(this.states)
     this.userId = parseInt(localStorage.getItem('id'));
     this.getHouses();
   }

@@ -2,6 +2,7 @@ import json
 from ..serializers import *
 from ..models import *
 from ..permissions import IsOwner
+from ..utils import time
 
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
@@ -43,7 +44,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = []
     permission_classes = (AllowAny,)
 
     @action(detail=True, methods=['GET'])
@@ -97,6 +98,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         for i in favHouses:
             i['images'] = list(Image.objects.all().filter(
                 house=i['id']).values('image', 'default'))
+            i['date_of_post'] = time.duration(i['date_of_post'])
 
         res = [i['house_id'] for i in list(Favorits.objects.all().filter(
             user=user.id, status='pending').values('house_id'))]
@@ -104,6 +106,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         for i in resHouses:
             i['images'] = list(Image.objects.all().filter(
                 house=i['id']).values('image', 'default'))
+            i['date_of_post'] = time.duration(i['date_of_post'])
 
         house = [favHouses, resHouses]
 

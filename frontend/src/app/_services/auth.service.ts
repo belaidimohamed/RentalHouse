@@ -21,6 +21,14 @@ export class AuthService {
                          localStorage.setItem('name', token.name);
                          localStorage.setItem('token', token.token);
                          localStorage.setItem('id', token.user_id);
+                         localStorage.setItem('role', token.role);
+
+                         console.log(localStorage.getItem('role'))
+                         console.log(localStorage.getItem('token'))
+                         console.log(localStorage.getItem('id'))
+                         console.log(localStorage.getItem('name'))
+
+
                          this.router.navigate(['/acceuil']);
                        }})
     );
