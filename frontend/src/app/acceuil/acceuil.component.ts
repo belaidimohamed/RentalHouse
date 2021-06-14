@@ -4,6 +4,7 @@ import { PostService } from 'src/app/_services/Post.service';
 import { Component, OnInit } from '@angular/core';
 import { GlobalConstants } from '../global-constant';
 import { GetService } from '../_services/Get.service';
+import * as a from "../../assets/zip-postcodes.json"
 
 import { Options, LabelType } from '@angular-slider/ngx-slider';
 
@@ -19,8 +20,33 @@ export class AcceuilComponent implements OnInit {
   hover: false;
   userId: number;
   baseUrl = GlobalConstants.apiURL ;
-  keyword = 'name';
-  states = [];
+  keyword = 'Cite';
+  states = [
+    {'Cite':'benzert'},
+    {'Cite':'jendouba'},
+    {'Cite':'tunis'},
+    {'Cite':'sfax'},
+    {'Cite':'ariana'},
+    {'Cite':'beja'},
+    {'Cite':'benarous'},
+    {'Cite':'gabes'},
+    {'Cite':'gafsa'},
+    {'Cite':'kairouan'},
+    {'Cite':'gasrin'},
+    {'Cite':'gbeli'},
+
+    {'Cite':'kef'},
+    {'Cite':'mehdia'},
+    {'Cite':'manouba'},
+    {'Cite':'mednin'},
+    {'Cite':'nabeul'},
+    {'Cite':'sidi bouzid'},
+    {'Cite':'siliana'},
+    {'Cite':'sousse'},
+    {'Cite':'tataouine'},
+    {'Cite':'tozeur'},
+    {'Cite':'zaghwan'},
+   ];
 
   filtre: any = {'location':null,'type':'Choose house type','minValue':0,'maxValue':1000};
   options: Options = {
@@ -45,6 +71,7 @@ export class AcceuilComponent implements OnInit {
       public auth: AuthService) { }
 
   ngOnInit() {
+    console.log(this.states)
     this.userId = parseInt(localStorage.getItem('id'));
     this.getHouses();
   }

@@ -37,7 +37,7 @@
                   frasmeborder="0"
                   allowfullscreen webkitallowfullscreen mozallowfullscreen>
                 </iframe>
-                <div class="mt-4 mb-4">
+                <div  *ngIf="house.owner_id == id && auth.loggedIn()" class="mt-4 mb-4">
                   <strong >Change location coordinates :</strong>
                   <input class="ml-2" type="text"  [(ngModel)] = "coord">
                   <button type="button" class="btn btn-success btn-sm ml-2" (click)="save()" > Save</button>
