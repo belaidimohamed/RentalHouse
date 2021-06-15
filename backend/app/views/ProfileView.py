@@ -240,12 +240,12 @@ class ProfileViewSet(viewsets.ModelViewSet):
         # add the user to accepted instead of demanders (ofc delete it from demanders too)
         h = json.loads(house.registration)
         h['accepted'].append({
-            'id': pk,
+            'id': request.data['uid'],
             'name': customer.username,
             'nbplaces': request.data['nbplaces'],
         })
         for i in h['demanders']:
-            if i['id'] == pk:
+            if i['id'] == request.data['uid']:
                 h['demanders'].remove(i)
                 break
         house.registration = json.dumps(h)
