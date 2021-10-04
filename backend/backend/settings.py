@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['127.0.0.1','localhost','192.168.1.17',"rental-house-2b486.web.
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:4200",
     'http://192.168.1.17:4200',
-    "https://rental-house-2b486.web.app/",
+    "https://rental-house-2b486.web.app",
 ]
 
 # Application definition
