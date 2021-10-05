@@ -93,14 +93,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'jttulcvz',
+#         'USER': 'jttulcvz',
+#         'PASSWORD': 'UjkMuC2wNU-fq3onIzfOLjH-WrxxBi-T',
+#         'HOST': 'fanny.db.elephantsql.com',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jttulcvz',
-        'USER': 'jttulcvz',
-        'PASSWORD': 'UjkMuC2wNU-fq3onIzfOLjH-WrxxBi-T',
-        'HOST': 'fanny.db.elephantsql.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 STATIC_URL = '/static/'
@@ -109,8 +115,6 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
