@@ -31,7 +31,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://192.168.1.17:4200',
     "https://rental-house-2b486.web.app",
 ]
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,7 +50,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware', # cors
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
