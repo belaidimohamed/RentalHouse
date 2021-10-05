@@ -25,7 +25,7 @@ SECRET_KEY = 'n)*n%*epg3#-#lf)qzq8ih@m931#c7556^asmlyk0))9h+0c^6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','192.168.1.17',"rental-house-2b486.web.app"]
+ALLOWED_HOSTS = ['mohamedyahoo.pythonanywhere.com','127.0.0.1','localhost','192.168.1.17',"rental-house-2b486.web.app"]
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:4200",
     'http://192.168.1.17:4200',
