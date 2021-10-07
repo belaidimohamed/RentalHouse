@@ -66,7 +66,7 @@
   </div>
   <br>
 
-  <button type="button" class="btn btn-success float-right" (click)="publish()" [routerLink]="['/acceuil']" >Publish </button>
+  <button type="button" class="btn btn-success float-right" (click)="publish()" *ngIf="!loading" [disabled]="!publishOpen">Publish </button>
   <br>
 
   <div *ngIf="selectedFile" class="img-preview-container">
@@ -83,6 +83,18 @@
     <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
   </div>
 
+  <div class="message-container" *ngIf="loading">
+    <ng-template #customLoadingTemplate>
+        <div class="message">
+            <h3>
+              Uploading house , please wait ..
+            </h3>
+        </div>
+    </ng-template>
+
+    <ngx-loading [show]="loading"  [template]="customLoadingTemplate">
+    </ngx-loading>
+  </div>
 
 </div>
 

@@ -43,6 +43,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { ReserveComponent } from './_forms/reserve/reserve.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CustomerComponent } from './customer/customer.component';
+import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
 
 
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -53,7 +54,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
 }
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     NavbarComponent,
     RegisterComponent,
@@ -93,6 +94,14 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     AutocompleteLibModule,
     MatSliderModule,
 
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.threeBounce,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)',
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff',
+      secondaryColour: '#ffffff',
+      tertiaryColour: '#ffffff'
+    }),
     ImageUploadModule.forRoot(),
     TabsModule.forRoot(),
     RouterModule.forRoot(appRoutes),

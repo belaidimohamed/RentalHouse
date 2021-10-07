@@ -73,7 +73,8 @@ export class AddhouseComponent implements OnInit {
     ,'tozeur'
     ,'zaghwan'
    ];
-
+   loading:boolean=false;
+   publishOpen: boolean =false;
 
   constructor(
     private post : PostService,
@@ -86,22 +87,26 @@ export class AddhouseComponent implements OnInit {
   }
 
   onUploadFinished(file: FileHolder) {
+    this.publishOpen = true
     this.model.images.push(file);
   }
   onRemoved(file: FileHolder) {
-    console.log(file);
     const index = this.model.images.indexOf(file);
     this.model.images.pop(index)
   }
   publish() {
     this.model.owner = localStorage.getItem('id');
-    console.log(this.model)
+    this.loading = true
     this.post.publishHouse(this.model).subscribe(
       (response:any) => {
+        this.loading = false
         this.alertify.success('house added !');
         this.router.navigate(['/details', { cid: response.id }])
       },
-      error => {console.log(error)}
+      error => {
+        console.log(error)
+        this.loading = false
+      }
     );
   }
 

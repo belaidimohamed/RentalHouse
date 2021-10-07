@@ -33,6 +33,7 @@
     "json-d-ts": "^1.0.1",
     "ngx-bootstrap": "^6.2.0",
     "ngx-gallery-9": "^1.0.6",
+    "ngx-loading": "^8.0.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

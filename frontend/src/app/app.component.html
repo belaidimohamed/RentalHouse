@@ -1,12 +1,19 @@
-<div *ngIf="this.route == '/'  || this.route.includes('/home') || this.route.includes('/#about') || this.route.includes('/#team') || this.route.includes('/#contact')|| this.route.includes('/#page-top');else other ">
-  <div>
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>Rental House</title>
 
-<ng-template #other>
-  <app-navbar></app-navbar>
-  <div style="margin-top:65px">
-    <router-outlet></router-outlet>
+  </head>
+  <div *ngIf="this.route == '/'  || this.route.includes('/home') || this.route.includes('/#about') || this.route.includes('/#team') || this.route.includes('/#contact')|| this.route.includes('/#page-top');else other ">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
   </div>
-</ng-template>
+
+  <ng-template #other>
+    <app-navbar></app-navbar>
+    <div style="margin-top:65px">
+      <router-outlet></router-outlet>
+    </div>
+  </ng-template>
+</html>
