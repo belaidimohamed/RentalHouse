@@ -13,9 +13,10 @@ import { AuthService } from '../_services/auth.service';
 export class HomeComponent implements OnInit {
   width = '40%' ;
   name : string = 'guest';
+  current="home";
   constructor(
     private dialog: MatDialog,
-    private auth : AuthService,
+    public auth : AuthService,
     private alertify: AlertifyService ,
     private  router: Router
   ) { }
@@ -44,5 +45,8 @@ export class HomeComponent implements OnInit {
       width: this.width,
       data:  {key: key},
     });
+  }
+  openAbout(){
+    this.current = "about"
   }
 }
