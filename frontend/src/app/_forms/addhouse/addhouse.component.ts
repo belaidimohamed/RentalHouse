@@ -74,7 +74,7 @@ export class AddhouseComponent implements OnInit {
     ,'zaghwan'
    ];
    loading:boolean=false;
-   publishOpen: boolean =false;
+   publishOpen: boolean =true;
 
   constructor(
     private post : PostService,
@@ -101,7 +101,7 @@ export class AddhouseComponent implements OnInit {
       (response:any) => {
         this.loading = false
         this.alertify.success('house added !');
-        this.router.navigate(['/details', { cid: response.id }])
+        this.router.navigate(['details/'+ response.id ])
       },
       error => {
         console.log(error)
