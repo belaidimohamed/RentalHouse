@@ -77,7 +77,7 @@ export class AcceuilComponent implements OnInit {
   }
   getHouses() {
     this.Get.getHouses().subscribe(
-      (data:any) => { // data : string ==> json   django : list -> http (jamad ,json, string) tir fel hwee chwaya -> tahbet fel front end mayta jamad -> traje3ha 7aya bel json parse
+      (data:any) => {
         this.houses = JSON.parse(data);
       },
       error => { console.log(error)}

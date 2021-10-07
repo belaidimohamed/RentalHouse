@@ -77,13 +77,22 @@ export class CardDetailsComponent implements OnInit {
   }
   makeGallery(photos: any) {
     this.galleryImages = [] ;
-    photos.forEach(element => {
-      this.galleryImages.push({
-        small: this.baseUrl + 'media/'+ element.image,
-        medium:  this.baseUrl + 'media/'+ element.image,
-        big:  this.baseUrl + 'media/'+ element.image,
-      })
-    });
+    if (photos.length==0){
+        this.galleryImages.push({
+          small: '../../assets/house-placeholder.jpg',
+          medium: '../../assets/house-placeholder.jpg' ,
+          big: '../../assets/house-placeholder.jpg' ,
+      });
+    }
+    else {
+      photos.forEach(element => {
+        this.galleryImages.push({
+          small: this.baseUrl + 'media/'+ element.image,
+          medium:  this.baseUrl + 'media/'+ element.image,
+          big:  this.baseUrl + 'media/'+ element.image,
+        })
+      });
+    }
   }
   addToFavorits() {
     this.post.addToFavorits( this.house.id ,parseInt(localStorage.getItem('id')) ).subscribe(

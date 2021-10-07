@@ -60,7 +60,9 @@
 
       <div  *ngFor="let house of houses" class="col-md-3" >  <!-- put 3 cards per line when screen is big (bootstrap) -->
         <div class="card mb-4 box-shadow cardBox" >
-          <img class="card-img-top image" alt="Home" [src]="baseUrl + 'media/'+house.images[0].image" alt="none">
+          <img class="card-img-top image" *ngIf="house.images[0]" alt="Home" [src]="baseUrl + 'media/'+house.images[0].image">
+          <img class="card-img-top image" *ngIf="!house.images[0]" alt="Home" src="../../assets/house-placeholder.jpg">
+
           <div class="card-body">
             <div class="card-text">
               <p>
