@@ -119,7 +119,8 @@ class HouseViewSet(viewsets.ModelViewSet):
 
                 img = Image(house=b, image=data)
                 img.save()
-            return HttpResponse({'id': b.id}, status=201)
+            # return JsonResponse(json.dumps(notif), safe=False)
+            return HttpResponse(json.dumps({'id': b.id}), status=201)
         return HttpResponse({'error': 'Failed to create house'}, status=400)
 
     @action(detail=True, methods=['POST'])
