@@ -27,6 +27,7 @@ class House(models.Model):
     description = models.TextField(null=True)
     registration = JSONField(null=True)
     comments = JSONField(null=True)
+    # "comments": "[{"id": 0, "comment": string , "user": 3, "jaims": [{"name": string, "id": 1, "type\": "thumb"}], "reponses": [{"name": "mohamed", "id": 1, "time": datetime, "reply": string, "reply_id": 0}], "time": datetime}]"
     max = models.IntegerField(null=True)
     date_of_post = models.DateTimeField(null=True)
     coordinates = models.CharField(null=True, max_length=100)
