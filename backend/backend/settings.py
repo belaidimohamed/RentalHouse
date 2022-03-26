@@ -25,7 +25,7 @@ SECRET_KEY = 'n)*n%*epg3#-#lf)qzq8ih@m931#c7556^asmlyk0))9h+0c^6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mohamedyahoo.pythonanywhere.com','127.0.0.1','localhost','192.168.1.17',"rental-house-2b486.web.app"]
+ALLOWED_HOSTS = ['mohamedyahoo88.pythonanywhere.com','127.0.0.1','localhost','192.168.1.17',"rental-house-2b486.web.app"]
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:4200",
     'http://192.168.1.17:4200',
@@ -45,6 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware', # OTP
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -148,3 +155,19 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+ADMINS = [
+    ('Mohamed', 'mohamed.belaidi@ensi-uma.tn'),
+]
+
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'landextest@gmail.com'
+EMAIL_HOST_PASSWORD = 'testingtesting'
+
+LOGIN_URL = 'two_factor:login'
+
+CRONJOBS = [
+    ('*/1 * * * *', 'myapp.cron.my_scheduled_job')
+]
