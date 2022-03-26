@@ -46,11 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_otp',
-    'django_otp.plugins.otp_static',
-    'django_otp.plugins.otp_totp',
-
-    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -60,7 +55,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django_otp.middleware.OTPMiddleware', # OTP
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -165,9 +159,3 @@ EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'landextest@gmail.com'
 EMAIL_HOST_PASSWORD = 'testingtesting'
-
-LOGIN_URL = 'two_factor:login'
-
-CRONJOBS = [
-    ('*/1 * * * *', 'myapp.cron.my_scheduled_job')
-]
